@@ -1,0 +1,30 @@
+.user-menu {
+    position: relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.user-menu:hover {
+    cursor: pointer;
+}
+
+.user-menu:hover > .user-menu__dropdown {
+    display: block;
+}
+
+.user-menu__dropdown {
+    position: absolute;
+    right: 0;
+
+    display: none;
+    width: 100px;
+    padding: 10px;
+    margin: 0;
+
+    list-style-type: none;
+    background-color: #eee;
+}
+
+.user-menu__dropdown li {
+    text-align: center;
+}
