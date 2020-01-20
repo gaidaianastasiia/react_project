@@ -4,9 +4,7 @@ import './App.css';
 import MainPage from "./pages/main-page/MainPage";
 import SignupPage from "./pages/signup-page/SignupPage";
 import SigninPage from "./pages/signin-page/SigninPage";
-import AuthService from "./services/AuthService";
-
-const authService = new AuthService();
+import ProtectedRoute from "./components/routing/ProtectedRoute";
 
 function App() {
     return (
@@ -21,22 +19,7 @@ function App() {
                 <Route path="/signup">
                     <SignupPage/>
                 </Route>
-                <Route
-                    render={({location}) =>
-                        authService.isAuthenticated() ?
-                            (<Redirect
-                                to={{
-                                    pathname: "/main/news",
-                                    state: {from: location}
-                                }}
-                            />) : (<Redirect
-                                to={{
-                                    pathname: "/signin",
-                                    state: {from: location}
-                                }}
-                            />)
-                    }
-                />
+                <ProtectedRoute/>
             </Switch>
         </div>
     );
