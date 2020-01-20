@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
+import {Link, Switch, Route, Redirect} from "react-router-dom";
 import './App.css';
+import MainPage from "./pages/main-page/MainPage";
+import SignupPage from "./pages/signup-page/SignupPage";
+import SigninPage from "./pages/signin-page/SigninPage";
+import ProtectedRoute from "./components/routing/ProtectedRoute";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div>
+            <Switch>
+                <Route path="/main">
+                    <MainPage/>
+                </Route>
+                <Route path="/signin">
+                    <SigninPage/>
+                </Route>
+                <Route path="/signup">
+                    <SignupPage/>
+                </Route>
+                <ProtectedRoute/>
+            </Switch>
+        </div>
+    );
 }
 
 export default App;
