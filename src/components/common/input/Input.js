@@ -16,15 +16,16 @@ const Input = ({type, name, value, onChange, labelText, errorMessage}) => {
 
     return (
         <div className="input">
-            <label htmlFor="input" className="input__label">{labelText}</label>
-            <input
-                type={type}
-                name={name}
-                value={value}
-                onChange={onChange}
-                className={`${controlClassName[type]} ${errorMessage && 'input__invalid'}`}
-                id="input"
-            />
+            <label className="input__label">
+                {labelText}
+                <input
+                    type={type}
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    className={`${controlClassName[type]} ${errorMessage && 'input__invalid'}`}
+                />
+            </label>
             {errorMessage && <span className="input__error">{errorMessage}</span>}
         </div>)
 };

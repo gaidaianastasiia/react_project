@@ -4,13 +4,10 @@
     margin-bottom: 15px;
 }
 
-.input__label {
-    margin-bottom: 10px;
-}
-
 /*  стили для input type="text, email, password, number" */
 .input__control_default {
-    margin-bottom: 10px;
+    display: block;
+    margin: 10px 0;
     padding: 5px;
     border: 1px solid #ced4da;
     background-color: #fff;
