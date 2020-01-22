@@ -1,11 +1,10 @@
-const configureFakeAPI = () => {
-    let realFetch = window.fetch;
+const FakeAPI = (() => {
+    //пример одной из публичных функций которая будет доступна вызовом window.fakeApi.authSignin() или название вашего метода
+    const authSignin = () => {};
 
-    window.fetch = function (url, opts) {
-        return new Promise((resolve, reject) => {
-            //логика бэкенда в соответствии с пришедшим url
-        });
+    return {
+        authSignin
     };
-};
+})();
 
-export default configureFakeAPI;
+export default FakeAPI;

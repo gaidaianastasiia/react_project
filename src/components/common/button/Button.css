@@ -1,0 +1,37 @@
+.btn {
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Themes */
+.btn_primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: all .3s ease-in-out;
+}
+
+.btn_primary:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+/* Sizes */
+.btn_size-small {
+    width: 60px;
+    padding: 5px 0;
+}
+
+.btn_size-medium {
+    width: 100px;
+    padding: 7px 0;
+    font-size: 17px;
+}
+
+.btn_size-large {
+    width: 120px;
+    padding: 9px 0;
+    font-size: 18px;
+}

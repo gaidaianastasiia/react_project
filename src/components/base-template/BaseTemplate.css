@@ -1,0 +1,15 @@
+aside {
+    position: absolute;
+    top: 60px;
+    bottom: 40px;
+    left: 0;
+    width: 100px;
+    padding: 15px;
+    text-align: center;
+    background-color: #333;
+    box-sizing: border-box;
+}
+
+main {
+    padding: 15px 15px 55px 115px;
+}

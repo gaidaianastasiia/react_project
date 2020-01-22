@@ -12,7 +12,7 @@ export default class ProtectedRoute extends Component {
                     authService.isAuthenticated() ?
                         (<Redirect
                             to={{
-                                pathname: "/main/news",
+                                pathname: "/news",
                                 state: {from: location}
                             }}
                         />) : (<Redirect

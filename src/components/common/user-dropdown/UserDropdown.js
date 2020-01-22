@@ -1,19 +1,20 @@
 import React from 'react';
-import Button from "../../common/Button";
-import "./UserMenu.css";
+import Button from "../button/Button";
+import "./UserDropdown.css";
 
-const UserMenu = () => (
+const UserDropdown = () => (
     <div className="user-menu">
-        <div className="user-menu__title">
+        <p className="user-menu__title">
+            <span className="user-menu__name">User</span>
             <span><i className="material-icons">account_circle</i></span>
             <span><i className="material-icons">keyboard_arrow_down</i></span>
-        </div>
+        </p>
         <ul className="user-menu__dropdown">
             <li>
-                <Button>Log Out</Button>
+                <Button size={"small"}>Log Out</Button>
             </li>
         </ul>
     </div>
 );
 
-export default UserMenu;
+export default UserDropdown;
