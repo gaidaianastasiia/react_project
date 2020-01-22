@@ -1,13 +1,13 @@
 .input {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 /*  стили для input type="text, email, password, number" */
 .input__control_default {
     display: block;
-    margin: 10px 0;
+    margin-top: 5px;
     padding: 5px;
     border: 1px solid #ced4da;
     background-color: #fff;
