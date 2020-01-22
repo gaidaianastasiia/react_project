@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import "./AuthSignin.css";
 
 export default class AuthSignin extends Component {
     render() {
         return (
-            <p>AuthSignin works!</p>
+          <div>AuthSignin works!</div>
         )
     }
 }

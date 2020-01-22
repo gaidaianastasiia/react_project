@@ -4,8 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router} from "react-router-dom";
-import configureFakeAPI from "./fake-api/fakeAPI";
-
+import FakeAPI from "./fake-api/fakeAPI";
 
 const app = (
     <Router>
@@ -13,9 +12,11 @@ const app = (
     </Router>
 );
 
-// setup fake api
-configureFakeAPI();
+//сохранение в глобальном контексте window FakeAPI, который везде будет достпен через вызов window.fakeApi.ваш_метод
+window.fakeApi = FakeAPI;
 
 ReactDOM.render(app, document.getElementById('root'));
 
 serviceWorker.unregister();
+
+
