@@ -4,15 +4,16 @@ import "./Textarea.css";
 
 const Textarea = ({value, name, rows, onChange, labelText, errorMessage}) => (
     <div className="textarea">
-        <label htmlFor="textarea" className="textarea__label">{labelText}</label>
-        <textarea
-            value={value}
-            name = {name}
-            rows={rows}
-            onChange={onChange}
-            className={`textarea__control ${errorMessage && 'textarea__invalid'}`}
-            id="textarea"
-        />
+        <label className="textarea__label">
+            {labelText}
+            <textarea
+                value={value}
+                name={name}
+                rows={rows}
+                onChange={onChange}
+                className={`textarea__control ${errorMessage && 'textarea__invalid'}`}
+            />
+        </label>
         {errorMessage && <span className="textarea__error">{errorMessage}</span>}
     </div>
 );
@@ -30,7 +31,8 @@ Textarea.defaultProps = {
     value: "",
     name: "",
     rows: "4",
-    onChange: () => {},
+    onChange: () => {
+    },
     labelText: "",
     errorMessage: ""
 };
