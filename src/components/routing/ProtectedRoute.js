@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import {Route, Redirect} from "react-router-dom";
-import AuthService from "../../services/AuthService";
 
 export default class ProtectedRoute extends Component {
     render() {
-        const authService = new AuthService();
+        const {isAuthenticated} = this.props;
 
         return (
             <Route
                 render={({location}) =>
-                    authService.isAuthenticated() ?
+                    isAuthenticated ?
                         (<Redirect
                             to={{
                                 pathname: "/news",
