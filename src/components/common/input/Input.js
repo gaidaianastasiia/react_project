@@ -1,8 +1,8 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import "./Input.css"
+import PropTypes from "prop-types";
+import "./Input.css";
 
-const Input = ({type, name, value, onChange, labelText, errorMessage}) => {
+const Input = ({ type, name, value, disabled, onChange, labelText, errorMessage }) => {
     const controlClassName = {
         text: "input__control_default",
         email: "input__control_default",
@@ -10,43 +10,40 @@ const Input = ({type, name, value, onChange, labelText, errorMessage}) => {
         number: "input__control_default",
         file: "input__control_file",
         date: "input__control_date",
+        time: "input__control_time",
         radio: "input__control_radio",
-        checkbox: "input__control_checkbox",
+        checkbox: "input__control_checkbox"
     };
 
     return (
         <div className="input">
             <label className="input__label">
                 {labelText}
-                <input
-                    type={type}
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    className={`${controlClassName[type]} ${errorMessage && 'input__invalid'}`}
-                />
+                <input type={type} name={name} value={value} disabled={disabled} onChange={onChange} className={`${controlClassName[type]} ${errorMessage && "input__invalid"}`} />
             </label>
             {errorMessage && <span className="input__error">{errorMessage}</span>}
-        </div>)
+        </div>
+    );
 };
 
 Input.propTypes = {
-    type: PropTypes.oneOf(['text', 'email', 'password', 'number', 'file', 'date', 'radio', 'checkbox']),
+    type: PropTypes.oneOf(["text", "email", "password", "number", "file", "date", "time", "radio", "checkbox"]),
     name: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    disabled: PropTypes.bool,
     onChange: PropTypes.func,
     labelText: PropTypes.string,
-    errorMessage: PropTypes.string,
+    errorMessage: PropTypes.string
 };
 
 Input.defaultProps = {
     type: "text",
     name: "",
     value: "",
-    onChange: () => {
-    },
+    disabled: false,
+    onChange: () => {},
     labelText: "",
-    errorMessage: "",
+    errorMessage: ""
 };
 
 export default Input;
