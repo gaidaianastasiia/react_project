@@ -15,23 +15,21 @@ const Input = ({ type, name, value, onChange, labelText, errorMessage }) => {
     time: "input__control_time"
   };
 
-  return (
-    <div className="input">
-      <label htmlFor="input" className="input__label">
-        {labelText}
-      </label>
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        className={`${controlClassName[type]} ${errorMessage &&
-          "input__invalid"}`}
-        id="input"
-      />
-      {errorMessage && <span className="input__error">{errorMessage}</span>}
-    </div>
-  );
+    return (
+        <div className="input">
+            <label className="input__label">
+                {labelText}
+                <input
+                    type={type}
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    className={`${controlClassName[type]} ${errorMessage && 'input__invalid'}`}
+                />
+            </label>
+            {errorMessage && <span className="input__error">{errorMessage}</span>}
+        </div>)
+
 };
 
 Input.propTypes = {

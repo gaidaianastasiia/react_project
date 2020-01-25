@@ -1,15 +1,12 @@
 .textarea {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
-}
-
-.textarea__label {
     margin-bottom: 10px;
 }
 
 .textarea__control {
-    margin-bottom: 10px;
+    display: block;
+    margin-top: 5px;
     padding: 5px;
     border: 1px solid #ced4da;
     resize: none;
