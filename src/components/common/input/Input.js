@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Input.css";
 
-const Input = ({ type, name, value, disabled, onChange, labelText, errorMessage }) => {
+const Input = ({ type, name, value, disabled, onChange, isChecked, labelText, errorMessage }) => {
     const controlClassName = {
         text: "input__control_default",
         email: "input__control_default",
@@ -19,7 +19,7 @@ const Input = ({ type, name, value, disabled, onChange, labelText, errorMessage 
         <div className="input">
             <label className="input__label">
                 {labelText}
-                <input type={type} name={name} value={value} disabled={disabled} onChange={onChange} className={`${controlClassName[type]} ${errorMessage && "input__invalid"}`} />
+                <input type={type} name={name} value={value} disabled={disabled} onChange={onChange} checked={isChecked} className={`${controlClassName[type]} ${errorMessage && "input__invalid"}`} />
             </label>
             {errorMessage && <span className="input__error">{errorMessage}</span>}
         </div>
@@ -31,6 +31,7 @@ Input.propTypes = {
     name: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     disabled: PropTypes.bool,
+    isChecked: PropTypes.bool,
     onChange: PropTypes.func,
     labelText: PropTypes.string,
     errorMessage: PropTypes.string
@@ -41,6 +42,7 @@ Input.defaultProps = {
     name: "",
     value: "",
     disabled: false,
+    isChecked: false,
     onChange: () => {},
     labelText: "",
     errorMessage: ""
