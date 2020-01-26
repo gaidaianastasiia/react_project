@@ -1,35 +1,27 @@
-.user-menu {
+.dd-wrapper {
     position: relative;
 }
 
-.user-menu p {
-    margin: 0;
-}
-
-.user-menu__title {
+.dd-header {
     display: flex;
     align-items: center;
     color: #eee;
 }
 
-.user-menu__name {
-    margin-right: 5px;
-}
-
-.user-menu:hover {
+.dd-header:hover {
     cursor: pointer;
 }
 
-.user-menu:hover > .user-menu__dropdown {
-    display: block;
+.user-name {
+    margin-right: 5px;
 }
 
-.user-menu__dropdown {
+.dd-list {
     position: absolute;
-    right: 0;
-
-    display: none;
-    width: 60px;
+    top: 100%;
+    right: -7px;
+    z-index: 1;
+    width: 100px;
     height: 80px;
     padding: 10px;
     margin: 0;
@@ -37,18 +29,18 @@
     color: #eee;
 
     list-style-type: none;
-    background-color: #343A40;
-    border-bottom-left-radius : 5px;
-    border-bottom-right-radius : 5px;
+    background-color: #343a40;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
-.user-menu__dropdown li {
+.dd-list-item {
     text-align: center;
 }
 
-.user-menu__dropdown button {
+.dd-list-item button {
     position: absolute;
     bottom: 15px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%);
 }
