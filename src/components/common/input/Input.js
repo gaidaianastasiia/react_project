@@ -29,7 +29,7 @@ const Input = ({ type, name, value, disabled, onChange, isChecked, labelText, er
 Input.propTypes = {
     type: PropTypes.oneOf(["text", "email", "password", "number", "file", "date", "time", "radio", "checkbox"]),
     name: PropTypes.string,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.number]),
     disabled: PropTypes.bool,
     isChecked: PropTypes.bool,
     onChange: PropTypes.func,
