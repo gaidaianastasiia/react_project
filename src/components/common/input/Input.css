@@ -4,6 +4,10 @@
     margin-bottom: 10px;
 }
 
+.input input:disabled {
+    background-color: #eee;
+}
+
 /*  стили для input type="text, email, password, number" */
 .input__control_default {
     display: block;
@@ -19,7 +23,21 @@
 }
 
 .input__control_date {
-    /* стили для input type="date" */
+    display: block;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.input__control_time {
+    display: block;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    border-radius: 5px;
 }
 
 .input__control_radio {
@@ -27,7 +45,7 @@
 }
 
 .input__control_checkbox {
-    /* стили для input type="checkbox" */
+    margin-top: 5px;
 }
 
 .input__error {

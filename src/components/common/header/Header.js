@@ -1,17 +1,22 @@
 import React, {Component} from 'react';
+import AuthService from "../../../services/AuthService";
 import Logo from "../logo/Logo";
 import UserDropdown from "../user-dropdown/UserDropdown";
 import "./Header.css";
-import AuthService from "../../../services/AuthService";
 
 export default class Header extends Component {
+    constructor() {
+        super();
+        this.authService = new AuthService();
+    }
+
     render() {
-        const authService = new AuthService();
+        const currentUser = this.authService.getCurrentUser();
 
         return (
             <header className="header">
-                <Logo />
-                {authService.isAuthenticated() && <UserDropdown />}
+                <Logo/>
+                {currentUser && <UserDropdown/>}
             </header>
         )
     }

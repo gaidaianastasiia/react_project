@@ -23,7 +23,7 @@ export default class BaseTemplate extends Component {
                 <aside>
                     <Nav/>
                 </aside>
-                <main>
+                <main className="main">
                     {children}
                 </main>
                 <Footer/>
