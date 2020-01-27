@@ -27,7 +27,10 @@ export default class News extends Component {
     }
 
     removeNewsById(id) {
-        console.log(this.state.newsList.find(el => el.id === id));
+        NewsService.removeNewsById(id);
+        this.setState({
+            newsList: NewsService.getAllNews()
+        })
     }
 
     updateNewsById(id, news) {

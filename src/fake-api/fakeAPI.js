@@ -21,7 +21,43 @@ const FakeAPI = (() => {
         }
     ];
 
-    //let news = [];
+    let news = [
+        {
+            id: "1",
+            title: "news1",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            imgUrl: "https://i.imgur.com/gdWIxn2.jpg",
+            type: "news"
+        },
+        {
+            id: "2",
+            title: "news2",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            imgUrl: "https://i.imgur.com/gdWIxn2.jpg",
+            type: "news"
+        },
+        {
+            id: "3",
+            title: "news3",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            imgUrl: "https://i.imgur.com/gdWIxn2.jpg",
+            type: "news"
+        },
+        {
+            id: "4",
+            title: "news4",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            imgUrl: "https://i.imgur.com/gdWIxn2.jpg",
+            type: "news"
+        },
+        {
+            id: "5",
+            title: "news5",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            imgUrl: "https://i.imgur.com/gdWIxn2.jpg",
+            type: "news"
+        },
+    ];
 
     // let events = [];
 
@@ -79,6 +115,48 @@ const FakeAPI = (() => {
     };
 
     //Публичные методы News раздела
+
+    const getAllNews = () => {
+        const res = news;
+        return res;
+    };
+
+    const getNewsById = id => {
+        return news[news.findIndex(el => el.id === id)];
+    };
+
+    const createNews = news => {
+        const newsId = Math.floor(Math.random() * (999999999 - 100000000) + 100000000);
+        const newNews = {
+            id: newsId,
+            title: news.title,
+            content: news.content,
+            imgUrl: news.imgUrl,
+            type: "news"
+        };
+        news.push(newNews);
+        return newNews;
+    };
+
+    const removeNewsById = (id) => {
+        const rmIndex = news.findIndex(el => el.id === id);
+        const rmNews = news[rmIndex];
+        news.splice(rmIndex, 1);
+        return rmNews;
+    };
+
+    const updateNewsById = (id, news) => {
+        const updIndex = news.findIndex(el => el.id === id);
+        let updNews = {
+            id: news.id,
+            title: news.title,
+            content: news.content,
+            imgUrl: news.imgUrl,
+            type: "news"
+        };
+        news[updIndex] = updNews;
+        return updNews;
+    };
 
     //Публичные методы Events раздела
 
@@ -157,7 +235,12 @@ const FakeAPI = (() => {
         //возвращаем все публичные методы
         isAuthenticated,
         authSignup,
-        authSignin
+        authSignin,
+        getAllNews,
+        getNewsById,
+        createNews,
+        removeNewsById,
+        updateNewsById
     };
 })();
 

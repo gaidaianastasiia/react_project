@@ -1,0 +1,34 @@
+.newsModal {
+    overflow: hidden;
+    display: none;
+}
+
+.newsModal.show {
+    display: block;
+}
+
+.newsModal::before {
+    content: "";
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .75);
+}
+
+.newsModal form {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    z-index: 2;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.newsModal form img {
+    max-width: 150px;
+}
