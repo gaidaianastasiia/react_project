@@ -3,7 +3,7 @@ import * as jwt from "jsonwebtoken";
 //импорт объекта с ролями пользователей
 import {USER_ROLES} from "../constants/userRoles";
 //импорт констант, хранящих коды ошибок сервера
-import {authErrors, INTERNAL_SERVER_ERROR} from "../constants/apiErrors";
+import {authErrors, INTERNAL_SERVER_ERROR, newsErrors} from "../constants/apiErrors";
 
 const FakeAPI = (() => {
     const TOKEN_SECRET_KEY = "qwerty"; // секретный ключ для генерации токена (необходим для auth раздела)
@@ -116,46 +116,70 @@ const FakeAPI = (() => {
 
     //Публичные методы News раздела
 
-    const getAllNews = () => {
-        const res = news;
-        return res;
+    const getAllNews = token => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+
+            if(isTokenValid) {
+                return resolve(news);
+            }
+            return reject(authErrors.INVALID_TOKEN);
+        });
     };
 
-    const getNewsById = id => {
-        return news[news.findIndex(el => el.id === id)];
+    const createNews = (token, newsItem) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+
+            if (isTokenValid) {
+                const newsId = Math.floor(Math.random() * (999999999 - 100000000) + 100000000);
+                const newNews = {
+                    id: newsId,
+                    title: newsItem.title,
+                    content: newsItem.content,
+                    imgUrl: newsItem.imgUrl,
+                    type: "news"
+                };
+                news.push(newNews);
+                return resolve();
+                // return reject(newsErrors.ADD_INVALID);
+            }
+            return reject(authErrors.INVALID_TOKEN);
+        });
     };
 
-    const createNews = news => {
-        const newsId = Math.floor(Math.random() * (999999999 - 100000000) + 100000000);
-        const newNews = {
-            id: newsId,
-            title: news.title,
-            content: news.content,
-            imgUrl: news.imgUrl,
-            type: "news"
-        };
-        news.push(newNews);
-        return newNews;
+    const removeNewsById = (token, newsItem) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+
+            if (isTokenValid) {
+                news.forEach((el, index) => {
+                    if (el.id === newsItem.id) {
+                        news.splice(index, 1);
+                        return resolve();
+                    }
+                });
+                return reject(newsErrors.ID_INVALID);
+            }
+            return reject(authErrors.INVALID_TOKEN);
+        });
     };
 
-    const removeNewsById = (id) => {
-        const rmIndex = news.findIndex(el => el.id === id);
-        const rmNews = news[rmIndex];
-        news.splice(rmIndex, 1);
-        return rmNews;
-    };
+    const updateNewsById = (token, newsItem) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
 
-    const updateNewsById = (id, news) => {
-        const updIndex = news.findIndex(el => el.id === id);
-        let updNews = {
-            id: news.id,
-            title: news.title,
-            content: news.content,
-            imgUrl: news.imgUrl,
-            type: "news"
-        };
-        news[updIndex] = updNews;
-        return updNews;
+            if (isTokenValid) {
+                news.forEach((el, index) => {
+                    if (el.id === newsItem.id) {
+                        news.splice(index, 1, newsItem);
+                        return resolve();
+                    }
+                });
+                return reject(newsErrors.ID_INVALID);
+            }
+            return reject(authErrors.INVALID_TOKEN);
+        });
     };
 
     //Публичные методы Events раздела
@@ -237,7 +261,6 @@ const FakeAPI = (() => {
         authSignup,
         authSignin,
         getAllNews,
-        getNewsById,
         createNews,
         removeNewsById,
         updateNewsById

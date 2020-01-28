@@ -1,28 +1,27 @@
 import FakeAPI from "../fake-api/fakeAPI";
+import LocalTokenService from "./LocalTokenService";
 
 class NewsService {
 
     constructor() {
+        this.tokenService = new LocalTokenService();
+        this.token = this.tokenService.getToken();
     }
 
-    static getAllNews() {
-        return FakeAPI.getAllNews();
+    getAllNews() {
+        return FakeAPI.getAllNews(this.token);
     }
 
-    static getNewsById(id) {
-        return FakeAPI.getNewsById(id);
+    createNews(news) {
+        return FakeAPI.createNews(this.token, news);
     }
 
-    static createNews(news) {
-        return FakeAPI.createNews(news);
+    removeNewsById(news) {
+        return FakeAPI.removeNewsById(this.token, news);
     }
 
-    static removeNewsById(id) {
-        return FakeAPI.removeNewsById(id);
-    }
-
-    static updateNewsById(id, news) {
-        return FakeAPI.updateNewsById(id, news);
+    updateNewsById(news) {
+        return FakeAPI.updateNewsById(this.token, news);
     }
 }
 

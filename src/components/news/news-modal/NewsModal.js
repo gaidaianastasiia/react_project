@@ -8,30 +8,65 @@ export default class NewsModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentNews: this.props.modalItem
+            imgBuff: "",
+            currentNews: {
+                id: "",
+                title: "",
+                content: "",
+                imgUrl: "https://cdn.pixabay.com/photo/2016/03/28/12/35/cat-1285634_1280.png",
+                type: "news"
+            }
         };
-        this.updateNews = this.updateNews.bind(this);
     }
+
+    componentDidMount() {
+        if (this.props.buffNews) {
+            this.setState({
+                ...this.state,
+                imgBuff: this.props.buffNews.imgUrl,
+                currentNews: this.props.buffNews
+            });
+        }
+    }
+
+    handleInputChange = ({ target: { name, value } }) => {
+        this.setState({
+            ...this.state,
+            currentNews: {
+                ...this.state.currentNews,
+                [name]: value
+            }
+        });
+    };
+
+    handleImageInputChange = event => {
+        this.setState({
+            ...this.state,
+            imgBuff: URL.createObjectURL(event.target.files[0])
+        });
+    };
+
 
     render() {
         return (
-            <div className={"newsModal NewsModalItem-" + this.props.modalItem.id + " " + (this.props.needModal ? "show" : "")}>
-                <form onSubmit={this.updateNews}>
-                    <img src={this.state.currentNews.imgUrl} alt=""/>
-                    <Input type={"file"} name={"modal_imgFile_input"} />
-                    <Input labelText={"News title"} name={"modal_title_input"} value={this.state.currentNews.title + "weafasdasdf"}/>
-                    <Textarea labelText={"News Content"} name={"modal_content_textarea"} value={this.state.currentNews.content} />
+            <div className={"newsModal"}>
+                <form onSubmit={this.returnNews} encType={"multipart/form-data"}>
+                    <img src={this.state.imgBuff} alt=""/>
+                    <Input type={"file"} name={"imgUrl"} onChange={this.handleImageInputChange} />
+                    <Input type={"text"} value={this.state.currentNews.title} name={"title"} labelText={"News title"} onChange={this.handleInputChange}/>
+                    <Textarea labelText={"News Content"} name={"content"} value={this.state.currentNews.content} onChange={this.handleInputChange} />
                     <div className="modal_edit_actions">
-                        <Button type={"submit"} children={"EDIT"} />
-                        <Button type={"button"} children={"CANCEL"} onClick={() => this.props.toggleModal()} />
+                        <Button type={"submit"} children={"SAVE"} />
+                        <Button type={"button"} children={"CANCEL"} onClick={() => {this.props.onCloseBtnClick()}} />
                     </div>
                 </form>
             </div>
         );
     }
 
-    updateNews(e) {
+    returnNews = (e) => {
         e.preventDefault();
-        console.log(this.state.currentNews);
+        this.props.onSubmitBtnClick(this.state.currentNews);
+        this.props.onCloseBtnClick();
     }
 }
