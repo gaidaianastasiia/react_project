@@ -1,36 +1,43 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Button from "../../common/button/Button";
-import PropTypes from 'prop-types';
+import { EventsContext } from "../Events";
 
-function EventsListItem({event}) {
-    console.log(event)
-  return (
-    <li>
-      <h2>{event.title}</h2>
-      <p>{event.description}</p>
-      <p>Date: {event.date}</p>
-      <p>Start {event.timeStart}</p>
-      <p>End {event.timeEnd}</p>
-      <Button
-        children="Update"
-        size="small"
-        type="button"
-        onClick={() =>console.log(event.id)}
-      />
-      <Button
-        children="Delete"
-        size="small"
-        type="button"
-        onClick={() => console.log(event.id)}
-      />
-    </li>
-  );
-}
+const EventsListItem = ({ event }) => (
+  <EventsContext.Consumer>
+    {({ isAdmin, handleEditBtnClick, handleDeleteBtnClick }) => (
+      <li>
+        <div>
+          <p>
+            Name: <b>{event.name}</b>
+          </p>
+          <p>Description: {event.description}</p>
+          <p>Date: {event.date}</p>
+          {event.full_day ? (
+            <p>Full Day Event</p>
+          ) : (
+            <Fragment>
+              <p>Start Time: {event.start_time}</p>
+              <p>End Time: {event.end_time}</p>
+            </Fragment>
+          )}
 
-EventsListItem.propTypes = {
-    event: PropTypes.object,
-
-
-}
+          {isAdmin && (
+            <div>
+              <Button size={"small"} onClick={() => handleEditBtnClick(event)}>
+                Edit
+              </Button>
+              <Button
+                size={"small"}
+                onClick={() => handleDeleteBtnClick(event.id)}
+              >
+                Delete
+              </Button>
+            </div>
+          )}
+        </div>
+      </li>
+    )}
+  </EventsContext.Consumer>
+);
 
 export default EventsListItem;

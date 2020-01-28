@@ -1,63 +1,97 @@
 import React, { Component } from "react";
-import "./EventsModal.css";
 import Input from "../../common/input/Input";
-import Textarea from "../../common/textarea/Textarea";
 import Button from "../../common/button/Button";
+import Textarea from "../../common/textarea/Textarea";
+import "./EventsModal.css";
+import CloseBtn from "../../common/close-btn/CloseBtn";
+
+
 
 export default class EventsModal extends Component {
+  constructor(props) {
+    super();
+    this.updetingEvent = props.event;
+  }
+
+  state = {
+    errorMessage: '',
+    name: "",
+    date: "",
+    start_time: "",
+    end_time: "",
+    full_day: false,
+    disabled: false
+  };
+
+  componentDidMount = () => {
+    if (this.updetingEvent) {
+      const { name, date, description, start_time, end_time, full_day } = this.updetingEvent;
+      this.setState({
+        ...this.state,
+        name,
+        date,
+        description,
+        start_time,
+        end_time,
+        full_day
+      });
+    }
+  };
+
+  handleInputChange = ({ target: { name, value } }) => {
+    this.setState({
+      ...this.state,
+      [name]: value
+    });
+  };
+
+  handleCheckboxChange = ({ target: { checked } }) => {
+    this.setState({
+      ...this.props,
+      start_time: "",
+      end_time: "",
+      disabled: checked,
+      full_day: checked
+    });
+  };
+
+  handleSubmit = () => {
+    let event;
+    if (this.updetingEvent) {
+      event = this.createEvent(this.updetingEvent.id);
+    } else {
+      event = this.createEvent(Date.now());
+
+    }
+
+    this.updetingEvent = null;
+    this.props.onSaveBtnClick(event);
+    console.log(this.props)
+  };
+
+  createEvent = id => {
+    const { name, date, description, start_time, end_time, full_day } = this.state;
+    return { name, date, description, start_time, end_time, full_day, id };
+  };
+
   render() {
+    const { name, date, description, start_time, end_time, full_day, disabled } = this.state;
+    const { onCloseBtnClick } = this.props;
+
     return (
-      <div className="modal">
-        <div className="modal-header">
-          <h1>Add event</h1>
-          <Button
-            children="&times;"
-            size="extraSmall"
-            type="button"
-            onClick={() => {
-              this.props.hideModal();
-            }}
-          />
+      <div className={"modal"}>
+        <div className={"modal__content"}>
+          <CloseBtn onCloseBtnClick={onCloseBtnClick} />
+          <Input name={"name"} value={name} onChange={this.handleInputChange} labelText={"Name"} />
+          <Textarea name={"description"} value={description} onChange={this.handleInputChange} labelText={"Description"} />
+          <Input type={"date"} name={"date"} value={date} onChange={this.handleInputChange} labelText={"Date"} />
+          <Input type={"time"} name={"start_time"} value={start_time} onChange={this.handleInputChange} labelText={"Start Time"} disabled={disabled} />
+          <Input type={"time"} name={"end_time"} value={end_time} onChange={this.handleInputChange} labelText={"End Time"} disabled={disabled} />
+          <Input type={"checkbox"} name={"full_day"} isChecked={full_day} onChange={this.handleCheckboxChange} labelText={"Full Day Event"} />
+          <Button onClick={this.handleSubmit}>Save</Button>
         </div>
-        <form onSubmit={this.props.submitHandler}>
-          <Input
-            className="text"
-            type="text"
-            labelText="Enter the title"
-            onChange={() => console.log("dasdas")}
-            value={this.value}
-          />
-          <Textarea
-            onChange={() => console.log("dsadsa")}
-            value=""
-            labelText="Enter the description"
-          />
-          <Input
-            type="time"
-            className="date"
-            labelText="Enter the start time of the event"
-            onChange={() => console.log("sds")}
-          />
-          <Input
-            type="time"
-            className="date"
-            labelText="Enter the end time of the event"
-            onChange={() => console.log("sdasd")}
-          />
-          <Input
-            type="checkbox"
-            labelText="Is full day"
-            className="checkbox"
-            onChange={() => console.log("check")}
-          />
-          <Button
-            type="submit"
-            children="Publicate"
-            theme="primary"
-            size="medium"
-          />
-        </form>
       </div>
     );
   }
 }
+

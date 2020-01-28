@@ -13,9 +13,7 @@ export const newsErrors = {
 };
 */
 
-/*
 export const eventsErrors = {
-    //код ошибок news раздела будет начинаться с 620
-};
-*/
+    ID_INVALID: 620
+  };
 

@@ -12,8 +12,7 @@ export const NEWS_SERVER_ERR_MESSAGES = {
 }
 */
 
-/*
-export const EVENTS_SERVER_ERR_MESSAGES = {
 
+export const EVENTS_SERVER_ERR_MESSAGES = {
+ID_INVALID: "Event with this id does not exist."
 }
-*/

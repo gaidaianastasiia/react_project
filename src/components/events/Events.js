@@ -1,82 +1,211 @@
 import React, { Component } from "react";
-import EventsList from "./events-list/EventsList";
+import LocalTokenService from "../../services/LocalTokenService";
+import AuthService from "../../services/AuthService";
+import EventsService from "../../services/EventsService";
+import { USER_ROLES } from "../../constants/userRoles";
 import Button from "../common/button/Button";
+import EventsList from "./events-list/EventsList";
 import EventsModal from "./events-modal/EventsModal";
+// import "./Events.css";
+import {
+  INTERNAL_SERVER_ERROR,
+  EVENTS_SERVER_ERR_MESSAGES
+} from "../../constants/apiErrMessages";
+import Loader from "../common/loader/Loader";
 
-const events = [
-  {
-    id: 1,
-    title: "event 1",
-    description: "awesome 1 event",
-    date: "22 febuary",
-    timeStart: "12:20",
-    timeEnd: "16:00"
-  },
-  {
-    id: 2,
-    title: "event 2",
-    description: "awesome 2 event",
-    date: "12 january",
-    timeStart: "15:50",
-    timeEnd: "18:00"
-  },
-  {
-    id: 3,
-    title: "event 3",
-    description: "awesome 3 event",
-    date: "25 march",
-    timeStart: "11:20",
-    timeEnd: "14:00"
-  },
-  {
-    id: 4,
-    title: "event 4",
-    description: "awesome 4 event",
-    date: "17 june",
-    timeStart: "16:20",
-    timeEnd: "19:00"
-  }
-];
+export const EventsContext = React.createContext();
 
 export default class Events extends Component {
+  constructor() {
+    super();
+    this.authService = new AuthService();
+    this.tokenService = new LocalTokenService();
+    this.eventService = new EventsService();
+    this.currentUser = this.authService.getCurrentUser();
+    this.isAdmin = this.currentUser.role === USER_ROLES.admin;
+  }
+
   state = {
-    id: "",
-    title: "",
-    date: "",
-    timeStart: "",
-    timeFinish: "",
-    isFullDay: false,
-    isModalOpen: false
+    events: [],
+    updetingEvent: null,
+    showModal: false,
+    showLoader: false,
+    serverErrMessages: ""
+  };
+  componentDidMount() {
+    this._setLoaderState(true);
+
+    this.eventService
+      .getEvents()
+      .then(events => {
+        this._setLoaderState(false);
+        this._setEventsState(events);
+      })
+      .catch(err => {
+        this._setLoaderState(false);
+        this._showServerErrMessage(err);
+      });
+  }
+
+  handleSaveBtnClick = event => {
+    if (this.state.updetingEvent) {
+      this._editEvent(event);
+    }
+
+    this._addEvent(event);
   };
 
-  showModal() {
-    this.setState({ isModalOpen: true });
-  }
-  hideModal() {
-    this.setState({ isModalOpen: false });
-  }
+  handleEditBtnClick = updetingEvent => {
+    this.setState({
+      ...this.state,
+      showModal: true,
+      updetingEvent
+    });
+  };
 
-  submitHandler(event){
-    event.preventDefault();
-    console.log("work")
+  handleDeleteBtnClick = id => {
+    this.setState({
+      ...this.state
+    });
 
-  }
+    this.eventService
+      .deleteEvent(id)
+      .then(() => {
+        this._setFinishUpdateState();
+      })
+      .catch(err => {
+        this._setFinishUpdateState();
+        this._showServerErrMessage(err);
+      });
+  };
+
+  openModal = () => {
+    this.setState({
+      ...this.state,
+      showModal: true
+    });
+  };
+
+  closeModal = () => {
+    this.setState({
+      ...this.state,
+      showModal: false
+    });
+  };
+
+  _addEvent = newEvent => {
+    this.setState({
+      ...this.state,
+      showModal: false,
+      showLoader: true,
+    });
+    this.eventService
+      .addEvent(newEvent)
+      .then(() => {
+        this._setFinishUpdateState();
+      })
+      .catch(err => {
+        this._setFinishUpdateState();
+        this._showServerErrMessage(err);
+      });
+  };
+
+  _editEvent = updetedEvent => {
+    this.setState({
+      ...this.state,
+      showModal: false,
+      showLoader: true,
+      updetingEvent: null
+    });
+    this.eventService
+      .editEvent(updetedEvent)
+      .then(() => {
+        this._setFinishUpdateState();
+      })
+      .catch(err => {
+        this._setFinishUpdateState();
+        this._showServerErrMessage(err);
+      });
+  };
+
+  _setFinishUpdateState = () => {
+    this.setState({
+      ...this.state,
+      showLoader: false,
+      updetingEvent: null
+    });
+  };
+
+  _setEventsState = events => {
+    this.setState({
+      ...this.state,
+      events
+    });
+  };
+
+  _setLoaderState = state => {
+    this.setState({
+      ...this.state,
+      showLoader: state
+    });
+  };
+
+  _showServerErrMessage = err => {
+    switch (err) {
+      case 500:
+        this._setServerErrMessage(INTERNAL_SERVER_ERROR);
+        break;
+      case 620:
+        this._setServerErrMessage(EVENTS_SERVER_ERR_MESSAGES.ID_INVALID);
+        break;
+      default:
+    }
+  };
+
+  _setServerErrMessage = errMessage => {
+    this.setState({
+      ...this.state,
+      serverErrMessage: errMessage
+    });
+  };
 
   render() {
+    const {
+      events,
+      updetingEvent,
+      showLoader,
+      showModal,
+      serverErrMessage
+    } = this.state;
     return (
-      <React.Fragment>
-        <Button
-          type="button"
-          children="Add event"
-          theme="primary"
-          size="large"
-          onClick={() => this.showModal()}
-        />
-        <EventsList events={events}  />
-        {this.state.isModalOpen && (
-          <EventsModal  hideModal={() => this.hideModal()} submitHandler = {this.submitHandler} />
+      <section className="events">
+        <h2 className="events__title">Events</h2>
+
+        {this.isAdmin && (
+          <Button onClick={() => this.openModal()}>Add Event</Button>
         )}
-      </React.Fragment>
+
+        <div className="events__server-err-message">{serverErrMessage}</div>
+
+        <EventsContext.Provider
+          value={{
+            isAdmin: this.isAdmin,
+            handleEditBtnClick: this.handleEditBtnClick,
+            handleDeleteBtnClick: this.handleDeleteBtnClick
+          }}
+        >
+          <EventsList events={events} />
+        </EventsContext.Provider>
+
+        {showModal && (
+          <EventsModal
+            event={updetingEvent}
+            onCloseBtnClick={this.closeModal}
+            onSaveBtnClick={this.handleSaveBtnClick}
+          />
+        )}
+        {showLoader && <Loader />}
+      </section>
     );
   }
 }
