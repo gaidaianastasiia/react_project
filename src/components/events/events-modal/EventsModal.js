@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import Input from "../../common/input/Input";
 import Button from "../../common/button/Button";
-import Textarea from "../../common/textarea/Textarea";
 import "./EventsModal.css";
-import CloseBtn from "../../common/close-btn/CloseBtn";
-
-
 
 export default class EventsModal extends Component {
   constructor(props) {
@@ -14,7 +10,6 @@ export default class EventsModal extends Component {
   }
 
   state = {
-    errorMessage: '',
     name: "",
     date: "",
     start_time: "",
@@ -25,12 +20,11 @@ export default class EventsModal extends Component {
 
   componentDidMount = () => {
     if (this.updetingEvent) {
-      const { name, date, description, start_time, end_time, full_day } = this.updetingEvent;
+      const { name, date, start_time, end_time, full_day } = this.updetingEvent;
       this.setState({
         ...this.state,
         name,
         date,
-        description,
         start_time,
         end_time,
         full_day
@@ -61,29 +55,41 @@ export default class EventsModal extends Component {
       event = this.createEvent(this.updetingEvent.id);
     } else {
       event = this.createEvent(Date.now());
-
     }
 
     this.updetingEvent = null;
+
+    this.setState({
+      ...this.state,
+      name: "",
+      date: "",
+      start_time: "",
+      end_time: "",
+      full_day: false,
+      disabled: false
+    });
+
     this.props.onSaveBtnClick(event);
-    console.log(this.props)
   };
 
   createEvent = id => {
-    const { name, date, description, start_time, end_time, full_day } = this.state;
-    return { name, date, description, start_time, end_time, full_day, id };
+    const { name, date, start_time, end_time, full_day } = this.state;
+    return { name, date, start_time, end_time, full_day, id };
   };
 
   render() {
-    const { name, date, description, start_time, end_time, full_day, disabled } = this.state;
+    const { name, date, start_time, end_time, full_day, disabled } = this.state;
     const { onCloseBtnClick } = this.props;
 
     return (
       <div className={"modal"}>
         <div className={"modal__content"}>
-          <CloseBtn onCloseBtnClick={onCloseBtnClick} />
+          <div className="modal__close">
+            <Button theme={"light"} size={"auto"} onClick={onCloseBtnClick}>
+              X
+            </Button>
+          </div>
           <Input name={"name"} value={name} onChange={this.handleInputChange} labelText={"Name"} />
-          <Textarea name={"description"} value={description} onChange={this.handleInputChange} labelText={"Description"} />
           <Input type={"date"} name={"date"} value={date} onChange={this.handleInputChange} labelText={"Date"} />
           <Input type={"time"} name={"start_time"} value={start_time} onChange={this.handleInputChange} labelText={"Start Time"} disabled={disabled} />
           <Input type={"time"} name={"end_time"} value={end_time} onChange={this.handleInputChange} labelText={"End Time"} disabled={disabled} />
@@ -94,4 +100,3 @@ export default class EventsModal extends Component {
     );
   }
 }
-

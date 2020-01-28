@@ -2,57 +2,58 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-}
-
-.input input:disabled {
+  }
+  
+  .input input:disabled {
     background-color: #eee;
-}
-
-/*  стили для input type="text, email, password, number" */
-.input__control_default {
+  }
+  
+  /*  стили для input type="text, email, password, number" */
+  .input__control_default {
     display: block;
     margin-top: 5px;
     padding: 5px;
     border: 1px solid #ced4da;
     background-color: #fff;
     border-radius: 5px;
-}
-
-.input__control_file {
+  }
+  
+  .input__control_file {
     /* стили для input type="file" */
-}
-
-.input__control_date {
+  }
+  
+  .input__control_date {
     display: block;
     margin-top: 5px;
     padding: 5px;
     border: 1px solid #ced4da;
     background-color: #fff;
     border-radius: 5px;
-}
-
-.input__control_time {
+  }
+  
+  .input__control_time {
     display: block;
     margin-top: 5px;
     padding: 5px;
     border: 1px solid #ced4da;
     background-color: #fff;
     border-radius: 5px;
-}
-
-.input__control_radio {
+  }
+  
+  .input__control_radio {
     /* стили для input type="radio" */
-}
-
-.input__control_checkbox {
+  }
+  
+  .input__control_checkbox {
     margin-top: 5px;
-}
-
-.input__error {
+  }
+  
+  .input__error {
     margin-bottom: 10px;
     color: red;
-}
-
-.input__invalid {
+  }
+  
+  .input__invalid {
     border-color: red;
-}
+  }
+  

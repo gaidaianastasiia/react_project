@@ -10,15 +10,15 @@ export default class EventsService {
     return window.fakeApi.getEvents(this.token);
   };
 
+  addEvent = newEvent => {
+    return window.fakeApi.addEvent(this.token, newEvent);
+  };
+
   editEvent = editedEvent => {
     return window.fakeApi.editEvent(this.token, editedEvent);
   };
 
-  addEvent = newEvent => {
-    return window.fakeApi.addEvent(this.token, newEvent);
-  }
-
   deleteEvent = id => {
     return window.fakeApi.deleteEvent(this.token, id);
-  }
+  };
 }

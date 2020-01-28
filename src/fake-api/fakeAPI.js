@@ -3,11 +3,7 @@ import * as jwt from "jsonwebtoken";
 //импорт объекта с ролями пользователей
 import { USER_ROLES } from "../constants/userRoles";
 //импорт констант, хранящих коды ошибок сервера
-import {
-  authErrors,
-  INTERNAL_SERVER_ERROR,
-  eventsErrors
-} from "../constants/apiErrors";
+import { authErrors, INTERNAL_SERVER_ERROR, profileErrors } from "../constants/apiErrors";
 
 const FakeAPI = (() => {
   const TOKEN_SECRET_KEY = "qwerty"; // секретный ключ для генерации токена (необходим для auth раздела)
@@ -30,7 +26,6 @@ const FakeAPI = (() => {
   let events = [
     {
       name: "Event 1",
-      description: "awesome event",
       date: "2020-01-26",
       start_time: "12:00",
       end_time: "18:00",
@@ -39,7 +34,6 @@ const FakeAPI = (() => {
     },
     {
       name: "Event 2",
-      description: "awesome event",
       date: "2020-01-26",
       start_time: "",
       end_time: "",
@@ -48,7 +42,6 @@ const FakeAPI = (() => {
     },
     {
       name: "Event 3",
-      description: "awesome event",
       date: "2020-01-27",
       start_time: "11:00",
       end_time: "16:00",
@@ -99,7 +92,7 @@ const FakeAPI = (() => {
         return reject(authErrors.INVALID_TOKEN);
       }
 
-      let decodedObj = _checkIsTokenValid(token);
+      let decodedObj = _decodeToken(token);
       let user = _getExistingUser(decodedObj.email);
 
       if (user) {
@@ -113,13 +106,24 @@ const FakeAPI = (() => {
   //Публичные методы News раздела
 
   //Публичные методы Events раздела
-
   const getEvents = token => {
     return _processApiCall((resolve, reject) => {
       const isTokenValid = _checkIsTokenValid(token);
 
       if (isTokenValid) {
         return resolve(events);
+      }
+
+      return reject(authErrors.INVALID_TOKEN);
+    });
+  };
+
+  const addEvent = (token, newEvent) => {
+    return _processApiCall((resolve, reject) => {
+      const isTokenValid = _checkIsTokenValid(token);
+      if (isTokenValid) {
+        events.push(newEvent);
+        return resolve();
       }
 
       return reject(authErrors.INVALID_TOKEN);
@@ -137,22 +141,9 @@ const FakeAPI = (() => {
             return resolve();
           }
         });
-        return reject(eventsErrors.ID_INVALID);
       }
 
       return reject(authErrors.INVALID_TOKEN);
-    });
-  };
-
-  const addEvent = (token, newEvent) => {
-    return _processApiCall((resolve, reject) => {
-      const isTokenValid = _checkIsTokenValid(token);
-
-      if (isTokenValid) {
-        events.push(newEvent);
-        return resolve();
-      }
-      return reject(eventsErrors.INTERNAL_SERVER_ERROR);
     });
   };
 
@@ -161,15 +152,37 @@ const FakeAPI = (() => {
       const isTokenValid = _checkIsTokenValid(token);
 
       if (isTokenValid) {
-        events.filter(event => event.id !== id);
-        
+        events.forEach((event, index) => {
+          if (event.id === id) {
+            events.splice(index, 1);
+          }
+        });
         return resolve();
       }
-      return reject(eventsErrors.INTERNAL_SERVER_ERROR);
+
+      return reject(authErrors.INVALID_TOKEN);
     });
   };
 
   //Публичные методы Profile раздела
+  const changePassword = (token, prevPass, newPass) => {
+    return _processApiCall((resolve, reject) => {
+      const currentUser = _decodeToken(token);
+
+      if (currentUser) {
+        users.forEach((user, index) => {
+          if (currentUser.email === user.email && prevPass === user.password) {
+            user.password = newPass;
+            return resolve();
+          }
+        });
+
+        return reject(profileErrors.PREV_PASS_INVALID);
+      }
+
+      return reject(authErrors.INVALID_TOKEN);
+    });
+  };
 
   /********************* Приватные методы ***********************************/
 
@@ -190,7 +203,7 @@ const FakeAPI = (() => {
         }
 
         return call(resolve, reject); //если запрос на сервер выполнен (успешный), вызываем переданную вами функцию
-      }, 3000);
+      }, 1000);
     });
   };
 
@@ -198,7 +211,7 @@ const FakeAPI = (() => {
   // значит запрос на сервер не выполнен (не успешный)
   //Этот метод вам не нужно вызывать, так как он вспомагательная часть метода _processApiCall
   const _isRequestFailed = () => {
-    return Math.random() > 0.8;
+    return Math.random() > 0.9;
   };
 
   //Этот метод неоиходим для проверки валидности токена, который вы передаете при вызове fakeApi из своих сервисов
@@ -206,7 +219,10 @@ const FakeAPI = (() => {
   //Если не валидный, делаете возврат ошибки return reject(authErrors.INVALID_TOKEN) которую вы берете из файла...
   //...constants/apiErrors.js
   const _checkIsTokenValid = token => {
-    //проверяем токен на валидность
+    return _decodeToken(token) !== undefined;
+  };
+
+  const _decodeToken = token => {
     try {
       return jwt.verify(token, TOKEN_SECRET_KEY);
     } catch (err) {
@@ -245,7 +261,8 @@ const FakeAPI = (() => {
     getEvents,
     editEvent,
     addEvent,
-    deleteEvent
+    deleteEvent,
+    changePassword
   };
 })();
 

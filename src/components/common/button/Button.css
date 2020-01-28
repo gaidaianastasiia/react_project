@@ -2,6 +2,7 @@
   text-align: center;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
 /* Themes */
@@ -9,18 +10,6 @@
   color: #fff;
   background-color: #007bff;
   border-color: #007bff;
-  transition: all 0.3s ease-in-out;
-}
-
-.btn_danger {
-  color: #fff;
-  background-color: #ff0015;
-}
-
-.btn_danger:hover {
-  color: #fff;
-  background-color: #d90000;
-  border-color: #d90000;
 }
 
 .btn_primary:hover {
@@ -29,10 +18,18 @@
   border-color: #0062cc;
 }
 
+.btn_light {
+  color: #343a40;
+  background-color: #dedede;
+}
+
+.btn_light:hover {
+  background-color: #bebebe;
+}
+
 /* Sizes */
-.btn_size-extraSmall {
-  width: 30px;
-  padding: 3px 0;
+.btn_size-auto {
+  width: auto;
 }
 
 .btn_size-small {
