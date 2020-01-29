@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 export default class Profile extends Component {
     render() {
         return (
-            <div>Profile works!</div>
+            <section>Profile works!</section>
         );
     }
 }

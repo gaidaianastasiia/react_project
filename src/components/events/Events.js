@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 export default class Events extends Component {
     render() {
         return (
-            <div>Events works!</div>
+            <section>Events works!</section>
         );
     }
 }
