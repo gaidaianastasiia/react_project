@@ -3,7 +3,7 @@ import * as jwt from "jsonwebtoken";
 //импорт объекта с ролями пользователей
 import {USER_ROLES} from "../constants/userRoles";
 //импорт констант, хранящих коды ошибок сервера
-import {authErrors, INTERNAL_SERVER_ERROR} from "../constants/apiErrors";
+import {authErrors, INTERNAL_SERVER_ERROR, profileErrors} from "../constants/apiErrors";
 
 const FakeAPI = (() => {
     const TOKEN_SECRET_KEY = "qwerty"; // секретный ключ для генерации токена (необходим для auth раздела)
@@ -84,6 +84,25 @@ const FakeAPI = (() => {
 
     //Публичные методы Profile раздела
 
+    const changePassword = (token, prevPass, newPass) => {
+        return _processApiCall((resolve, reject) => {
+          const currentUser = _decodeToken(token);
+    
+          if (currentUser) {
+            users.forEach((user, index) => {
+              if (currentUser.email === user.email && prevPass === user.password) {
+                user.password = newPass;
+                return resolve();
+              }
+            });
+    
+            return reject(profileErrors.PREV_PASS_INVALID);
+          }
+    
+          return reject(authErrors.INVALID_TOKEN);
+        });
+      };
+
     /********************* Приватные методы ***********************************/
 
     //---------Общие приватные методы---------------
@@ -157,7 +176,8 @@ const FakeAPI = (() => {
         //возвращаем все публичные методы
         isAuthenticated,
         authSignup,
-        authSignin
+        authSignin,
+        changePassword
     };
 })();
 
