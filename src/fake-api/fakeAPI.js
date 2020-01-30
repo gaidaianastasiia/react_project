@@ -172,6 +172,8 @@ const FakeAPI = (() => {
 
     //Приватные методы Profile раздела
 
+    
+
     return {
         //возвращаем все публичные методы
         isAuthenticated,

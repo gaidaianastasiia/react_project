@@ -8,11 +8,15 @@ import {
   PROFILE_SERVER_ERR_MESSAGES
 } from "../../constants/apiErrMessages";
 import ProfileDetails from "./profile-details/ProfileDetails";
+import AuthService from "../../services/AuthService";
 
 export default class Profile extends Component {
   constructor() {
     super();
     this.profileService = new ProfileService();
+    this.authService = new AuthService();
+    this.currentUser = this.authService.getCurrentUser();
+    this.firstName = this.profileService.first_name;
   }
 
   state = {
@@ -21,12 +25,12 @@ export default class Profile extends Component {
     serverErrMessage: ""
   };
 
-  handleChangePassBtnClick = () => {
-    this._setModalState(true);
+  handleChangeNameCurrentUSer = () => {
+    console.log(this.currentUser.role, this.firstName);
   };
 
-  handleChangeNameCurrentUSer = () => {
-    console.log("test");
+  handleChangePassBtnClick = () => {
+    this._setModalState(true);
   };
 
   closeModal = () => {
@@ -68,6 +72,14 @@ export default class Profile extends Component {
     });
   };
 
+  // _setUserState = () => {
+  //   this.setState({
+  //     ...this.state,
+  //     firstName: 'Ivan',
+  //     lastName: 'Ivanov',
+  //   })
+  // }
+
   _showServerErrMessage = err => {
     switch (err) {
       case 500:
@@ -97,6 +109,7 @@ export default class Profile extends Component {
         <div className="profile__server-err-message">{serverErrMessage}</div>
         <ProfileDetails
           handleChangePassBtnClick={this.handleChangePassBtnClick}
+          handleChangeNameCurrentUSer={this.handleChangeNameCurrentUSer}
         />
         {showModal && (
           <ProfileModal
