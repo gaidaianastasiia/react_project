@@ -61,13 +61,12 @@ export default class AuthSignin extends Component {
             ...this.state,
             emailErrMessage: "",
             passErrMessage: "",
-            serverErrMessage: ""
+            serverErrMessage: "",
+            showLoader: true
         });
     }
 
     signin = user => {
-        this.setLoaderState(true);
-
         this.authService.signin(user)
             .then(() => {
                 this.setLoaderState(false);
