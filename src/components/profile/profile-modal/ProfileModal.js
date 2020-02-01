@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ValidationService from "../../../services/ValidationService";
-import CloseBtn from "../../common/close-btn/CloseBtn";
 import Button from "../../common/button/Button";
 import Input from "../../common/input/Input";
+import "./ProfileModal.css";
 
 export default class ProfileModal extends Component {
   constructor(props) {
@@ -26,7 +26,9 @@ export default class ProfileModal extends Component {
     });
   };
 
-  submit = () => {
+  submit = e => {
+    e.preventDefault();
+
     const { prevPass, newPass, confNewPass } = this.state;
     const prevPassValidData = this.validationService.validatePassword(prevPass);
     const newPassValidData = this.validationService.validatePassword(newPass);
@@ -50,13 +52,19 @@ export default class ProfileModal extends Component {
 
     return (
       <div className={"modal"}>
-        <div className={"modal__content"}>
-          <CloseBtn onCloseBtnClick={handleCloseBtnClick} />
+        <form className={"moda__form"}>
+          <div className="modal__close-btn">
+            <Button theme={"light"} size={"auto"} onClick={handleCloseBtnClick}>
+              X
+            </Button>
+          </div>
           <Input type={"password"} name={"prevPass"} value={prevPass} onChange={this.handleInputChange} labelText={"Previous password"} errorMessage={prevPassErrMessage} />
           <Input type={"password"} name={"newPass"} value={newPass} onChange={this.handleInputChange} labelText={"New password"} errorMessage={newPassErrMessage} />
           <Input type={"password"} name={"confNewPass"} value={confNewPass} onChange={this.handleInputChange} labelText={"Enter your new password again for verification"} errorMessage={confPassErrMessage} />
-          <Button onClick={this.submit}>Cnange</Button>
-        </div>
+          <Button type={"submit"} onClick={this.submit}>
+            Cnange
+          </Button>
+        </form>
       </div>
     );
   }
