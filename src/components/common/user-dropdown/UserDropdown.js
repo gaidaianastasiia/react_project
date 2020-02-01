@@ -1,8 +1,8 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import Button from "../button/Button";
 import "./UserDropdown.css";
 import AuthService from "../../../services/AuthService";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 export default class UserDropdown extends Component {
     constructor() {
@@ -37,8 +37,9 @@ export default class UserDropdown extends Component {
     };
 
     render() {
-        const {listOpen, isRedirect} = this.state;
-        const userName = this.currentUser.role;
+        const { listOpen, isRedirect } = this.state;
+        const { first_name, role } = this.currentUser;
+        const userName = first_name ? first_name : role;
 
         return (
             <div className="dd-wrapper">
@@ -60,7 +61,7 @@ export default class UserDropdown extends Component {
                         </li>
                     </ul>
                 )}
-                {isRedirect && <Redirect to={{pathname: "/signin"}}/>}
+                {isRedirect && <Redirect to={{ pathname: "/signin" }} />}
             </div>
         );
     }
