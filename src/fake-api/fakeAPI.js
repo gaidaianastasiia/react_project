@@ -1,6 +1,6 @@
 import * as jwt from "jsonwebtoken";
-import { USER_ROLES } from "../constants/userRoles";
-import { INTERNAL_SERVER_ERROR, authErrors, profileErrors } from "../constants/apiErrors";
+import {USER_ROLES} from "../constants/userRoles";
+import {INTERNAL_SERVER_ERROR, authErrors, profileErrors} from "../constants/apiErrors";
 
 const FakeAPI = (() => {
     const TOKEN_SECRET_KEY = "qwerty";
@@ -156,6 +156,7 @@ const FakeAPI = (() => {
 
     //----------------Публичные методы Events раздела---------------
 
+
     //----------------Публичные методы Profile раздела--------------
 
     const updateUserData = (token, updatedData) => {
@@ -198,7 +199,7 @@ const FakeAPI = (() => {
 
     /********************* Приватные методы ***********************************/
 
-        //---------Общие приватные методы---------------
+    //---------Общие приватные методы---------------
 
     const _processApiCall = call => {
             return new Promise((resolve, reject) => {
