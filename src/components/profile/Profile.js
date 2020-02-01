@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./Profile.css";
-import ProfileService from "../../services/ProfileService";
 import ProfileModal from "./profile-modal/ProfileModal";
 import Loader from "../common/loader/Loader";
 import {
@@ -8,15 +7,12 @@ import {
   PROFILE_SERVER_ERR_MESSAGES
 } from "../../constants/apiErrMessages";
 import ProfileDetails from "./profile-details/ProfileDetails";
-import AuthService from "../../services/AuthService";
+import ProfileService from "../../services/ProfileService";
 
 export default class Profile extends Component {
   constructor() {
     super();
     this.profileService = new ProfileService();
-    this.authService = new AuthService();
-    this.currentUser = this.authService.getCurrentUser();
-    this.firstName = this.profileService.first_name;
   }
 
   state = {
@@ -25,12 +21,17 @@ export default class Profile extends Component {
     serverErrMessage: ""
   };
 
-  handleChangeNameCurrentUSer = () => {
-    console.log(this.currentUser.role, this.firstName);
-  };
-
   handleChangePassBtnClick = () => {
     this._setModalState(true);
+  };
+
+  handleUpdateSubmit = (newData) => {
+    this.setState({
+      ...this.state,
+      showLoader: true
+    });
+
+    this._updateUserData(newData);
   };
 
   closeModal = () => {
@@ -45,6 +46,17 @@ export default class Profile extends Component {
     });
     this._changePass(prevPass, newPass);
   };
+
+  _updateUserData = newData => {
+    this.profileService.updateUserData(newData)
+    .then(() => {
+      this._setLoaderState(false);
+    })
+    .catch(err => {
+      this._setLoaderState(false);
+      this._showServerErrMessage(err);
+    });
+  }
 
   _changePass = (prevPass, newPass) => {
     this.profileService
@@ -71,14 +83,6 @@ export default class Profile extends Component {
       showModal: state
     });
   };
-
-  // _setUserState = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     firstName: 'Ivan',
-  //     lastName: 'Ivanov',
-  //   })
-  // }
 
   _showServerErrMessage = err => {
     switch (err) {
@@ -108,12 +112,13 @@ export default class Profile extends Component {
         <h2>Profile</h2>
         <div className="profile__server-err-message">{serverErrMessage}</div>
         <ProfileDetails
+        handleUpdateSubmit={this.handleUpdateSubmit}
           handleChangePassBtnClick={this.handleChangePassBtnClick}
-          handleChangeNameCurrentUSer={this.handleChangeNameCurrentUSer}
         />
         {showModal && (
           <ProfileModal
             handleCloseBtnClick={this.closeModal}
+            
             handleChangePassSubmit={this.handleChangePassSubmit}
           />
         )}

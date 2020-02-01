@@ -1,8 +1,15 @@
 import React, { Component } from "react";
 import Input from "../../common/input/Input";
 import Button from "../../common/button/Button";
+import AuthService from "../../../services/AuthService";
 
 export default class ProfileDetails extends Component {
+  constructor(props) {
+    super();
+    this.authService = new AuthService();
+    this.currentUser = this.authService.getCurrentUser();
+
+  }
   state = {
     first_name: "",
     last_name: "",
@@ -11,6 +18,18 @@ export default class ProfileDetails extends Component {
     gender: ""
   };
 
+  componentDidMount() {
+    this.setState({
+      ...this.state,
+      first_name: this.currentUser.first_name,
+      last_name: this.currentUser.last_name,
+      email: this.currentUser.email,
+      age: this.currentUser.age,
+      gender: this.currentUser.gender
+
+    });
+  }
+
   handleInputChange = ({ target: { name, value } }) => {
     this.setState({
       ...this.state,
@@ -18,11 +37,23 @@ export default class ProfileDetails extends Component {
     });
   };
 
+  handleSubmit = () => {
+    const { first_name, last_name, email, age, gender } = this.state;
+    const newData = {
+      first_name,
+      last_name,
+      email,
+      age,
+      gender,
+      role: this.currentUser.role
+    }
+    this.props.handleUpdateSubmit(newData);
+  }
+
   render() {
     const { first_name, last_name, email, age, gender } = this.state;
     const {
-      handleChangePassBtnClick,
-      handleChangeNameCurrentUSer
+      handleChangePassBtnClick
     } = this.props;
 
     return (
@@ -79,7 +110,7 @@ export default class ProfileDetails extends Component {
             Change Password
           </Button>
         </p>
-        <Button size={"large"} onClick={handleChangeNameCurrentUSer}>
+        <Button size={"large"} onClick={this.handleSubmit}>
           Update
         </Button>
       </form>

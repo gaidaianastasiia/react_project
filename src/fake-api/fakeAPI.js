@@ -83,6 +83,23 @@ const FakeAPI = (() => {
     //Публичные методы Events раздела
 
     //Публичные методы Profile раздела
+    const updateUserData = (token, newData) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+
+            if (isTokenValid) {
+                users.forEach((user, index) => {
+                    if(users.email === newData.email) {
+                        newData.password = user.password;
+                        users.splice(index, 1, newData);
+                        return resolve();
+                    }
+                })
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    }
 
     const changePassword = (token, prevPass, newPass) => {
         return _processApiCall((resolve, reject) => {
@@ -179,7 +196,8 @@ const FakeAPI = (() => {
         isAuthenticated,
         authSignup,
         authSignin,
-        changePassword
+        changePassword,
+        updateUserData
     };
 })();
 
