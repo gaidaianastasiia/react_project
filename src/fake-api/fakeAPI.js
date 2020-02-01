@@ -1,6 +1,6 @@
 import * as jwt from "jsonwebtoken";
-import {USER_ROLES} from "../constants/userRoles";
-import {INTERNAL_SERVER_ERROR, authErrors, profileErrors} from "../constants/apiErrors";
+import { USER_ROLES } from "../constants/userRoles";
+import { INTERNAL_SERVER_ERROR, authErrors, profileErrors } from "../constants/apiErrors";
 
 const FakeAPI = (() => {
     const TOKEN_SECRET_KEY = "qwerty";
@@ -42,11 +42,34 @@ const FakeAPI = (() => {
         }
     ];
 
-    // let events = [];
+    let events = [
+        {
+            name: "Event 1",
+            date: "2020-01-26",
+            start_time: "12:00",
+            end_time: "18:00",
+            full_day: false,
+            id: "1579988115659"
+        },
+        {
+            name: "Event 2",
+            date: "2020-01-26",
+            start_time: "",
+            end_time: "",
+            full_day: true,
+            id: "1579988210048"
+        },
+        {
+            name: "Event 3",
+            date: "2020-01-27",
+            start_time: "11:00",
+            end_time: "16:00",
+            full_day: false,
+            id: "1579988172714"
+        }
+    ];
 
-    /************************** Публичные методы **********************************/
-
-        //----------------Публичные методы Auth раздела---------------
+    //---------------- Auth Public Methods ---------------
     const authSignup = newUser => {
             return _processApiCall((resolve, reject) => {
                 newUser.role = USER_ROLES.user;
@@ -93,7 +116,7 @@ const FakeAPI = (() => {
         });
     };
 
-    //----------------Публичные методы News раздела---------------
+    //----------------News Public Methods ---------------
     const getAllNews = token => {
         return _processApiCall((resolve, reject) => {
             const isTokenValid = _checkIsTokenValid(token);
@@ -154,11 +177,66 @@ const FakeAPI = (() => {
         });
     };
 
-    //----------------Публичные методы Events раздела---------------
+    //---------------- Events Public Methods ---------------
+    const getEvents = token => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
 
+            if (isTokenValid) {
+                return resolve(events);
+            }
 
-    //----------------Публичные методы Profile раздела--------------
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
 
+    const addEvent = (token, newEvent) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+            if (isTokenValid) {
+                newEvent.id = Date.now();
+                events.push(newEvent);
+                return resolve();
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
+
+    const editEvent = (token, editedEvent) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+            if (isTokenValid) {
+                events.forEach((event, index) => {
+                    if (event.id === editedEvent.id) {
+                        events.splice(index, 1, editedEvent);
+                        return resolve();
+                    }
+                });
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
+
+    const deleteEvent = (token, id) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+
+            if (isTokenValid) {
+                events.forEach((event, index) => {
+                    if (event.id === id) {
+                        events.splice(index, 1);
+                    }
+                });
+                return resolve();
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
+
+    //---------------- Profile Public Methods ---------------
     const updateUserData = (token, updatedData) => {
         return _processApiCall((resolve, reject) => {
             const isTokenValid = _checkIsTokenValid(token);
@@ -197,10 +275,7 @@ const FakeAPI = (() => {
         });
     };
 
-    /********************* Приватные методы ***********************************/
-
-    //---------Общие приватные методы---------------
-
+    /********************* Private methods ***********************************/
     const _processApiCall = call => {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -229,9 +304,8 @@ const FakeAPI = (() => {
         }
     };
 
-    //-------------Приватные методы Auth раздела-----------------
     const _generateToken = userDataObj => {
-        let objForToken = {...userDataObj};
+        let objForToken = { ...userDataObj };
         delete objForToken.password;
         return jwt.sign(objForToken, TOKEN_SECRET_KEY);
     };
@@ -256,6 +330,10 @@ const FakeAPI = (() => {
         createNews,
         updateNewsById,
         removeNewsById,
+        getEvents,
+        addEvent,
+        editEvent,
+        deleteEvent,
         updateUserData,
         changePassword
     };
