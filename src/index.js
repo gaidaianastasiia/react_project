@@ -12,7 +12,7 @@ const app = (
     </Router>
 );
 
-//сохранение в глобальном контексте window FakeAPI, который везде будет достпен через вызов window.fakeApi.ваш_метод
+
 window.fakeApi = FakeAPI;
 
 ReactDOM.render(app, document.getElementById('root'));

@@ -10,7 +10,6 @@ const EventsListItem = ({ event }) => (
           <p>
             Name: <b>{event.name}</b>
           </p>
-          <p>Description: {event.description}</p>
           <p>Date: {event.date}</p>
           {event.full_day ? (
             <p>Full Day Event</p>
@@ -26,10 +25,7 @@ const EventsListItem = ({ event }) => (
               <Button size={"small"} onClick={() => handleEditBtnClick(event)}>
                 Edit
               </Button>
-              <Button
-                size={"small"}
-                onClick={() => handleDeleteBtnClick(event.id)}
-              >
+              <Button size={"small"} onClick={() => handleDeleteBtnClick(event.id)}>
                 Delete
               </Button>
             </div>

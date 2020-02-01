@@ -1,12 +1,12 @@
-//импорт библиотеки для работы с токеном
+
 import * as jwt from "jsonwebtoken";
-//импорт объекта с ролями пользователей
+
 import { USER_ROLES } from "../constants/userRoles";
-//импорт констант, хранящих коды ошибок сервера
+
 import { authErrors, INTERNAL_SERVER_ERROR, profileErrors } from "../constants/apiErrors";
 
 const FakeAPI = (() => {
-  const TOKEN_SECRET_KEY = "qwerty"; // секретный ключ для генерации токена (необходим для auth раздела)
+  const TOKEN_SECRET_KEY = "qwerty"; 
 
   let users = [
     {
@@ -26,7 +26,7 @@ const FakeAPI = (() => {
   let events = [
     {
       name: "Event 1",
-      date: "2020-01-26",
+      date: '2020/04/12',
       description: "awesome event №1",
       start_time: "12:00",
       end_time: "18:00",
@@ -35,7 +35,7 @@ const FakeAPI = (() => {
     },
     {
       name: "Event 2",
-      date: "2020-01-26",
+      date: '2020/04/12',
       description: "awesome event №2",
       start_time: "",
       end_time: "",
@@ -44,7 +44,7 @@ const FakeAPI = (() => {
     },
     {
       name: "Event 3",
-      date: "2020-01-27",
+      date: '2020/04/12',
       description: "awesome event №3",
       start_time: "11:00",
       end_time: "16:00",
@@ -191,36 +191,27 @@ const FakeAPI = (() => {
 
   //---------Общие приватные методы---------------
 
-  /* _processApiCall - это универсальный метод, который нужно использовать во всех публичных методах fakeApi
-   * Он принимает в себя функцию, в которой вы описываете все необходимые для вас действия.
-   * Данный метод оборачивает вашу функцию в Promise, создает искусственную задержку ответа сервера
-   * и имитирует случайную ошибку сервера.
-   * Пример ее использования можно увидеть в публичных методах: authSignup, authSignin, isAuthenticated*/
+
   const _processApiCall = call => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        //создаем искусственную задержку ответа сервера
+       
         if (_isRequestFailed()) {
-          //если запрос на сервер не выполнен (не успешный) ...
-          return reject(INTERNAL_SERVER_ERROR); //Возвращаем код ошибки 500 - ВНУТРЕННЯЯ ОШИБКА СЕРВЕРА
+         
+          return reject(INTERNAL_SERVER_ERROR); 
         }
 
-        return call(resolve, reject); //если запрос на сервер выполнен (успешный), вызываем переданную вами функцию
+        return call(resolve, reject); 
       }, 1000);
     });
   };
 
-  //иммитируем результат ответа сервера, если результат Math.random() > 0.8
-  // значит запрос на сервер не выполнен (не успешный)
-  //Этот метод вам не нужно вызывать, так как он вспомагательная часть метода _processApiCall
+
   const _isRequestFailed = () => {
     return Math.random() > 0.9;
   };
 
-  //Этот метод неоиходим для проверки валидности токена, который вы передаете при вызове fakeApi из своих сервисов
-  //Если он валидный, то продолжаете выполнять необходимые в вашем методе действия
-  //Если не валидный, делаете возврат ошибки return reject(authErrors.INVALID_TOKEN) которую вы берете из файла...
-  //...constants/apiErrors.js
+
   const _checkIsTokenValid = token => {
     return _decodeToken(token) !== undefined;
   };
@@ -257,7 +248,7 @@ const FakeAPI = (() => {
   //Приватные методы Profile раздела
 
   return {
-    //возвращаем все публичные методы
+
     isAuthenticated,
     authSignup,
     authSignin,

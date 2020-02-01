@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import LocalTokenService from "../../services/LocalTokenService";
 import AuthService from "../../services/AuthService";
 import EventsService from "../../services/EventsService";
 import { USER_ROLES } from "../../constants/userRoles";
@@ -11,14 +10,12 @@ import { INTERNAL_SERVER_ERROR } from "../../constants/apiErrMessages";
 import Loader from "../common/loader/Loader";
 import ServerErrMessage from "../common/server-err-message/ServerErrMessage";
 
-
 export const EventsContext = React.createContext();
 
 export default class Events extends Component {
   constructor() {
     super();
     this.authService = new AuthService();
-    this.tokenService = new LocalTokenService();
     this.eventsService = new EventsService();
     this.currentUser = this.authService.getCurrentUser();
     this.isAdmin = this.currentUser.role === USER_ROLES.admin;
@@ -58,8 +55,8 @@ export default class Events extends Component {
     this.setState({
       ...this.state,
       serverErrMessage: "",
-      updetingEvent: null,
-      showModal: true
+      showModal: true,
+      updetingEvent: null
     });
   };
 
@@ -111,14 +108,6 @@ export default class Events extends Component {
     this._callEventsService(this.eventsService.editEvent(updetedEvent));
   };
 
-  _setFinishUpdateState = () => {
-    this.setState({
-      ...this.state,
-      showLoader: false,
-      updetingEvent: null
-    });
-  };
-
   _callEventsService = serviceMethod => {
     serviceMethod
       .then(() => {
@@ -129,6 +118,7 @@ export default class Events extends Component {
         this._showServerErrMessage(err);
       });
   };
+
   _setEventsState = events => {
     this.setState({
       ...this.state,
@@ -160,39 +150,21 @@ export default class Events extends Component {
   };
 
   render() {
-    const {
-      events,
-      updetingEvent,
-      showLoader,
-      showModal,
-      serverErrMessage
-    } = this.state;
+    const { events, updetingEvent, showLoader, showModal, serverErrMessage } = this.state;
+
     return (
       <section className="events">
         <h2 className="events__title">Events</h2>
+
         <ServerErrMessage>{serverErrMessage}</ServerErrMessage>
 
-        {this.isAdmin && (
-          <Button onClick={this.handleAddBtnClick}>Add Event</Button>
-        )}
+        {this.isAdmin && <Button onClick={this.handleAddBtnClick}>Add Event</Button>}
 
-        <EventsContext.Provider
-          value={{
-            isAdmin: this.isAdmin,
-            handleEditBtnClick: this.handleEditBtnClick,
-            handleDeleteBtnClick: this.handleDeleteBtnClick
-          }}
-        >
+        <EventsContext.Provider value={{ isAdmin: this.isAdmin, handleEditBtnClick: this.handleEditBtnClick, handleDeleteBtnClick: this.handleDeleteBtnClick }}>
           <EventsList events={events} />
         </EventsContext.Provider>
 
-        {showModal && (
-          <EventsModal
-            event={updetingEvent}
-            handleCloseBtnClick={this.handleCloseBtnClick}
-            handleSubmit={this.handleSubmit}
-          />
-        )}
+        {showModal && <EventsModal event={updetingEvent} handleCloseBtnClick={this.handleCloseBtnClick} handleSubmit={this.handleSubmit} />}
         {showLoader && <Loader />}
       </section>
     );

@@ -51,20 +51,20 @@ export default class ValidationService {
     return passwordsData;
   }
 
-  validateEventsInput(event) {
-    let eventsData = {
-      isValid: true,
-      errMessage: ""
-    };
-    for (let key in event) {
-     if(this._isEmpty(event[key].toString())){
-         eventsData.isValid = false;
-         eventsData.errMessage = "This field is required";
-     }
-    }
-    console.log(eventsData);
-    return eventsData;
-  }
+  // validateEventsInput(event) {
+  //   let eventsData = {
+  //     isValid: true,
+  //     errMessage: ""
+  //   };
+  //   for (let key in event) {
+  //    if(this._isEmpty(event[key].toString())){
+  //        eventsData.isValid = false;
+  //        eventsData.errMessage = "This field is required";
+  //    }
+  //   }
+  //   console.log(eventsData);
+  //   return eventsData;
+  // }
 
   _isEmpty(value) {
     return !value.trim();
