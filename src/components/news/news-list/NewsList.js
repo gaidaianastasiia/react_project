@@ -1,9 +1,12 @@
-import React, {Component} from 'react';
+import React from "react";
+import NewsListItem from "../news-list-item/NewsListItem";
 
-export default class NewsList extends Component {
-    render() {
-        return (
-            <div>NewsList works!</div>
-        );
-    }
-}
+const NewsList = ({ news }) => (
+  <div>
+    {news.map(el => (
+      <NewsListItem key={el.id} newsItem={el} />
+    ))}
+  </div>
+);
+
+export default NewsList;

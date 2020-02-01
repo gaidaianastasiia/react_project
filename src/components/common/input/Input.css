@@ -19,7 +19,8 @@
 }
 
 .input__control_file {
-    /* стили для input type="file" */
+    display: block;
+    margin-top: 5px;
 }
 
 .input__control_date {

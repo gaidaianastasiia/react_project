@@ -1,6 +1,6 @@
 import * as jwt from "jsonwebtoken";
 import {USER_ROLES} from "../constants/userRoles";
-import {authErrors, INTERNAL_SERVER_ERROR, profileErrors} from "../constants/apiErrors";
+import {INTERNAL_SERVER_ERROR, authErrors, profileErrors} from "../constants/apiErrors";
 
 const FakeAPI = (() => {
     const TOKEN_SECRET_KEY = "qwerty";
@@ -18,7 +18,29 @@ const FakeAPI = (() => {
         }
     ];
 
-    //let news = [];
+    let news = [
+        {
+            id: "1",
+            title: "news1",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            imgUrl: "https://i.imgur.com/gdWIxn2.jpg",
+            type: "news"
+        },
+        {
+            id: "2",
+            title: "news2",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            imgUrl: "https://i.imgur.com/gdWIxn2.jpg",
+            type: "news"
+        },
+        {
+            id: "3",
+            title: "news3",
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            imgUrl: "https://i.imgur.com/gdWIxn2.jpg",
+            type: "news"
+        }
+    ];
 
     // let events = [];
 
@@ -71,9 +93,69 @@ const FakeAPI = (() => {
         });
     };
 
-    //----------------Публичные методы News раздела-----------------
+    //----------------Публичные методы News раздела---------------
+    const getAllNews = token => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+
+            if (isTokenValid) {
+                return resolve(news);
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
+
+    const createNews = (token, newsItem) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+
+            if (isTokenValid) {
+                newsItem.id = Date.now();
+                news.push(newsItem);
+                return resolve();
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
+
+    const removeNewsById = (token, id) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+
+            if (isTokenValid) {
+                news.forEach((el, index) => {
+                    if (el.id === id) {
+                        news.splice(index, 1);
+                        return resolve();
+                    }
+                });
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
+
+    const updateNewsById = (token, newsItem) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+
+            if (isTokenValid) {
+                news.forEach((el, index) => {
+                    if (el.id === newsItem.id) {
+                        news.splice(index, 1, newsItem);
+                        return resolve();
+                    }
+                });
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
 
     //----------------Публичные методы Events раздела---------------
+
 
     //----------------Публичные методы Profile раздела--------------
 
@@ -117,7 +199,7 @@ const FakeAPI = (() => {
 
     /********************* Приватные методы ***********************************/
 
-        //---------Общие приватные методы---------------
+    //---------Общие приватные методы---------------
 
     const _processApiCall = call => {
             return new Promise((resolve, reject) => {
@@ -170,6 +252,10 @@ const FakeAPI = (() => {
         isAuthenticated,
         authSignup,
         authSignin,
+        getAllNews,
+        createNews,
+        updateNewsById,
+        removeNewsById,
         updateUserData,
         changePassword
     };
