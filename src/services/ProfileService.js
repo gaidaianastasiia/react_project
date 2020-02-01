@@ -5,9 +5,12 @@ export default class ProfileService {
     this.tokenService = new LocalTokenService();
     this.token = this.tokenService.getToken();
   }
-  updateUserData = newData => {
-    return window.fakeApi.updateUserData(this.token, newData);
-  }
+
+  updateUserData = updatedData => {
+    return window.fakeApi.updateUserData(this.token, updatedData).then(token => {
+      this.tokenService.saveToken(token);
+    });
+  };
 
   changePass = (prevPass, newPass) => {
     return window.fakeApi.changePassword(this.token, prevPass, newPass);
