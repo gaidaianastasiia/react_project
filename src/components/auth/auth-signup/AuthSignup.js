@@ -60,7 +60,6 @@ export default class AuthSignup extends Component {
         }
     }
 
-
     clearErrMessages = () => {
         this.setState({
             ...this.state,
@@ -68,12 +67,11 @@ export default class AuthSignup extends Component {
             passErrMessage: "",
             confPassErrMessage: "",
             serverErrMessage: "",
+            showLoader: true
         });
     }
 
     signup = newUser => {
-        this.setLoaderState(true);
-
         this.authService.signup(newUser)
             .then(() => {
                     this.setLoaderState(false);
