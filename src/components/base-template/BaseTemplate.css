@@ -1,5 +1,6 @@
 aside {
     position: absolute;
+    z-index: 1;
     top: 60px;
     bottom: 40px;
     left: 0;
@@ -11,7 +12,12 @@ aside {
 }
 
 .main {
+    height: calc(100vh - 100px);
+}
+
+.main section {
+    position: relative;
+    height: calc(100vh - 100px);
     padding: 15px 15px 55px 115px;
-    height: calc(100vh - 60px - 15px - 40px);
-    overflow-y: scroll;
+    overflow: auto;
 }

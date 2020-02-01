@@ -1,12 +1,9 @@
-//импорт библиотеки для работы с токеном
 import * as jwt from "jsonwebtoken";
-//импорт объекта с ролями пользователей
-import {USER_ROLES} from "../constants/userRoles";
-//импорт констант, хранящих коды ошибок сервера
-import {authErrors, INTERNAL_SERVER_ERROR, newsErrors} from "../constants/apiErrors";
+import { USER_ROLES } from "../constants/userRoles";
+import { INTERNAL_SERVER_ERROR, authErrors, profileErrors } from "../constants/apiErrors";
 
 const FakeAPI = (() => {
-    const TOKEN_SECRET_KEY = "qwerty"; // секретный ключ для генерации токена (необходим для auth раздела)
+    const TOKEN_SECRET_KEY = "qwerty";
 
     let users = [
         {
@@ -42,24 +39,35 @@ const FakeAPI = (() => {
             content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             imgUrl: "https://i.imgur.com/gdWIxn2.jpg",
             type: "news"
-        },
-        {
-            id: "4",
-            title: "news4",
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            imgUrl: "https://i.imgur.com/gdWIxn2.jpg",
-            type: "news"
-        },
-        {
-            id: "5",
-            title: "news5",
-            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            imgUrl: "https://i.imgur.com/gdWIxn2.jpg",
-            type: "news"
-        },
+        }
     ];
 
-    // let events = [];
+    let events = [
+        {
+            name: "Event 1",
+            date: "2020-01-26",
+            start_time: "12:00",
+            end_time: "18:00",
+            full_day: false,
+            id: "1579988115659"
+        },
+        {
+            name: "Event 2",
+            date: "2020-01-26",
+            start_time: "",
+            end_time: "",
+            full_day: true,
+            id: "1579988210048"
+        },
+        {
+            name: "Event 3",
+            date: "2020-01-27",
+            start_time: "11:00",
+            end_time: "16:00",
+            full_day: false,
+            id: "1579988172714"
+        }
+    ];
 
     /************************** Публичные методы **********************************/
 
@@ -67,6 +75,7 @@ const FakeAPI = (() => {
     const authSignup = newUser => {
             return _processApiCall((resolve, reject) => {
                 newUser.role = USER_ROLES.user;
+
                 let isUserExist = _getExistingUser(newUser.email);
 
                 if (isUserExist) {
@@ -74,10 +83,7 @@ const FakeAPI = (() => {
                 }
 
                 users.push(newUser);
-                let userForToken = {...newUser};
-                delete userForToken.password;
-                const token = _generateToken(userForToken);
-
+                const token = _generateToken(newUser);
                 return resolve(token);
             });
         };
@@ -87,9 +93,7 @@ const FakeAPI = (() => {
             const existingUser = _getExistingUser(user.email);
 
             if (existingUser && existingUser.password === user.password) {
-                let userForToken = {...existingUser};
-                delete userForToken.password;
-                const token = _generateToken(userForToken);
+                const token = _generateToken(existingUser);
                 return resolve(token);
             }
 
@@ -114,15 +118,15 @@ const FakeAPI = (() => {
         });
     };
 
-    //Публичные методы News раздела
-
+    //----------------Публичные методы News раздела---------------
     const getAllNews = token => {
         return _processApiCall((resolve, reject) => {
             const isTokenValid = _checkIsTokenValid(token);
 
-            if(isTokenValid) {
+            if (isTokenValid) {
                 return resolve(news);
             }
+
             return reject(authErrors.INVALID_TOKEN);
         });
     };
@@ -132,35 +136,28 @@ const FakeAPI = (() => {
             const isTokenValid = _checkIsTokenValid(token);
 
             if (isTokenValid) {
-                const newsId = Math.floor(Math.random() * (999999999 - 100000000) + 100000000);
-                const newNews = {
-                    id: newsId,
-                    title: newsItem.title,
-                    content: newsItem.content,
-                    imgUrl: newsItem.imgUrl,
-                    type: "news"
-                };
-                news.push(newNews);
+                newsItem.id = Date.now();
+                news.push(newsItem);
                 return resolve();
-                // return reject(newsErrors.ADD_INVALID);
             }
+
             return reject(authErrors.INVALID_TOKEN);
         });
     };
 
-    const removeNewsById = (token, newsItem) => {
+    const removeNewsById = (token, id) => {
         return _processApiCall((resolve, reject) => {
             const isTokenValid = _checkIsTokenValid(token);
 
             if (isTokenValid) {
                 news.forEach((el, index) => {
-                    if (el.id === newsItem.id) {
+                    if (el.id === id) {
                         news.splice(index, 1);
                         return resolve();
                     }
                 });
-                return reject(newsErrors.ID_INVALID);
             }
+
             return reject(authErrors.INVALID_TOKEN);
         });
     };
@@ -176,50 +173,128 @@ const FakeAPI = (() => {
                         return resolve();
                     }
                 });
-                return reject(newsErrors.ID_INVALID);
             }
+
             return reject(authErrors.INVALID_TOKEN);
         });
     };
 
-    //Публичные методы Events раздела
+    //----------------Публичные методы Events раздела---------------
+    const getEvents = token => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
 
-    //Публичные методы Profile раздела
+            if (isTokenValid) {
+                return resolve(events);
+            }
 
-    /********************* Приватные методы ***********************************/
-
-    //---------Общие приватные методы---------------
-
-    /* _processApiCall - это универсальный метод, который нужно использовать во всех публичных методах fakeApi
-     * Он принимает в себя функцию, в которой вы описываете все необходимые для вас действия.
-     * Данный метод оборачивает вашу функцию в Promise, создает искусственную задержку ответа сервера
-     * и имитирует случайную ошибку сервера.
-     * Пример ее использования можно увидеть в публичных методах: authSignup, authSignin, isAuthenticated*/
-    const _processApiCall = call => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                //создаем искусственную задержку ответа сервера
-                if (_isRequestFailed()) {
-                    //если запрос на сервер не выполнен (не успешный) ...
-                    return reject(INTERNAL_SERVER_ERROR); //Возвращаем код ошибки 500 - ВНУТРЕННЯЯ ОШИБКА СЕРВЕРА
-                }
-
-                return call(resolve, reject); //если запрос на сервер выполнен (успешный), вызываем переданную вами функцию
-            }, 1000);
+            return reject(authErrors.INVALID_TOKEN);
         });
     };
 
-    //иммитируем результат ответа сервера, если результат Math.random() > 0.8
-    // значит запрос на сервер не выполнен (не успешный)
-    //Этот метод вам не нужно вызывать, так как он вспомагательная часть метода _processApiCall
+    const addEvent = (token, newEvent) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+            if (isTokenValid) {
+                events.push(newEvent);
+                return resolve();
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
+
+    const editEvent = (token, editedEvent) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+            if (isTokenValid) {
+                events.forEach((event, index) => {
+                    if (event.id === editedEvent.id) {
+                        events.splice(index, 1, editedEvent);
+                        return resolve();
+                    }
+                });
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
+
+    const deleteEvent = (token, id) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+
+            if (isTokenValid) {
+                events.forEach((event, index) => {
+                    if (event.id === id) {
+                        events.splice(index, 1);
+                    }
+                });
+                return resolve();
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
+
+    //----------------Публичные методы Profile раздела---------------
+    const updateUserData = (token, updatedData) => {
+        return _processApiCall((resolve, reject) => {
+            const isTokenValid = _checkIsTokenValid(token);
+
+            if (isTokenValid) {
+                users.forEach((user, index) => {
+                    if (user.email === updatedData.email) {
+                        updatedData.password = user.password;
+                        users.splice(index, 1, updatedData);
+                        const token = _generateToken(updatedData);
+                        return resolve(token);
+                    }
+                });
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
+
+    const changePassword = (token, prevPass, newPass) => {
+        return _processApiCall((resolve, reject) => {
+            const currentUser = _decodeToken(token);
+
+            if (currentUser) {
+                users.forEach((user, index) => {
+                    if (currentUser.email === user.email && prevPass === user.password) {
+                        user.password = newPass;
+                        return resolve();
+                    }
+                });
+
+                return reject(profileErrors.PREV_PASS_INVALID);
+            }
+
+            return reject(authErrors.INVALID_TOKEN);
+        });
+    };
+
+    /********************* Приватные методы ***********************************/
+
+        //---------Общие приватные методы---------------
+    const _processApiCall = call => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (_isRequestFailed()) {
+                        return reject(INTERNAL_SERVER_ERROR);
+                    }
+
+                    return call(resolve, reject);
+                }, 1000);
+            });
+        };
+
     const _isRequestFailed = () => {
         return Math.random() > 0.9;
     };
 
-    //Этот метод неоиходим для проверки валидности токена, который вы передаете при вызове fakeApi из своих сервисов
-    //Если он валидный, то продолжаете выполнять необходимые в вашем методе действия
-    //Если не валидный, делаете возврат ошибки return reject(authErrors.INVALID_TOKEN) которую вы берете из файла...
-    //...constants/apiErrors.js
     const _checkIsTokenValid = token => {
         return _decodeToken(token) !== undefined;
     };
@@ -232,9 +307,10 @@ const FakeAPI = (() => {
         }
     };
 
-    //-------------Приватные методы Auth раздела-----------------
-    const _generateToken = obj => {
-        return jwt.sign(obj, TOKEN_SECRET_KEY);
+    const _generateToken = userDataObj => {
+        let objForToken = { ...userDataObj };
+        delete objForToken.password;
+        return jwt.sign(objForToken, TOKEN_SECRET_KEY);
     };
 
     const _getExistingUser = email => {
@@ -249,21 +325,20 @@ const FakeAPI = (() => {
         return existingUser;
     };
 
-    //Приватные методы News раздела
-
-    //Приватные методы Events раздела
-
-    //Приватные методы Profile раздела
-
     return {
-        //возвращаем все публичные методы
         isAuthenticated,
         authSignup,
         authSignin,
         getAllNews,
         createNews,
+        updateNewsById,
         removeNewsById,
-        updateNewsById
+        getEvents,
+        addEvent,
+        editEvent,
+        deleteEvent,
+        updateUserData,
+        changePassword
     };
 })();
 

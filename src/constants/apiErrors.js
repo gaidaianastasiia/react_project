@@ -7,17 +7,6 @@ export const authErrors = {
     WRONG_EMAIL_OR_PASSWORD: 602,
 };
 
-
-export const newsErrors = {
-    //код ошибок news раздела будет начинаться с 610
-    ID_INVALID: 610,
-    ADD_INVALID: 611
+export const profileErrors = {
+    PREV_PASS_INVALID: 630
 };
-
-
-/*
-export const eventsErrors = {
-    //код ошибок news раздела будет начинаться с 620
-};
-*/
-
