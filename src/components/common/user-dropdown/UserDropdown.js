@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Button from "../button/Button";
-import "./UserDropdown.css";
 import AuthService from "../../../services/AuthService";
 import { Redirect } from "react-router-dom";
 
@@ -46,11 +45,9 @@ export default class UserDropdown extends Component {
                 <div className="dd-header" onClick={this.toggleList}>
                     <span className="user-name">{userName}</span>
                     <span>
-            <i className="material-icons">account_circle</i>
-          </span>
-                    <span>
-            <i className="material-icons">keyboard_arrow_down</i>
-          </span>
+                        <i className="icon-user"></i>
+                        <i className="icon-chevron-down"></i>
+                    </span>
                 </div>
                 {listOpen && (
                     <ul className="dd-list">

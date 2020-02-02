@@ -3,8 +3,8 @@ import AuthService from "../../services/AuthService";
 import EventsService from "../../services/EventsService";
 import {USER_ROLES} from "../../constants/userRoles";
 import Button from "../common/button/Button";
-import EventsList from "./events-list/EventsList";
-import EventsModal from "./events-modal/EventsModal";
+import EventsList from "./EventsList";
+import EventsModal from "./EventsModal";
 import {INTERNAL_SERVER_ERROR} from "../../constants/apiErrMessages";
 import Loader from "../common/loader/Loader";
 import ServerErrMessage from "../common/server-err-message/ServerErrMessage";
@@ -155,7 +155,7 @@ export default class Events extends Component {
 
         return (
             <section className="events">
-                <h2 className="events__title">Events</h2>
+                <h2 className="title title_page">Events</h2>
 
                 <ServerErrMessage>{serverErrMessage}</ServerErrMessage>
 

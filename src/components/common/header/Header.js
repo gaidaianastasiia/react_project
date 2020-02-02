@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import AuthService from "../../../services/AuthService";
 import Logo from "../logo/Logo";
 import UserDropdown from "../user-dropdown/UserDropdown";
-import "./Header.css";
 
 export default class Header extends Component {
     constructor() {

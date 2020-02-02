@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
-import AuthSignin from "./auth-signin/AuthSignin";
-import AuthSignup from "./auth-signup/AuthSignup";
+import AuthSignin from "./AuthSignin";
+import AuthSignup from "./AuthSignup";
 import PropTypes from 'prop-types';
 
 export default class Auth extends Component {

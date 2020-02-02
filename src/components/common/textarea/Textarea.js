@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import "./Textarea.css";
 
 const Textarea = ({value, name, rows, onChange, labelText, errorMessage}) => (
     <div className="textarea">
