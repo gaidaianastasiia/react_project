@@ -75,9 +75,11 @@ export default class ProfileDetails extends Component {
             Change Password
           </Button>
         </p>
+        <p>
         <Button size={"large"} onClick={this.handleSubmit}>
           Update
         </Button>
+        </p>
       </form>
     );
   }

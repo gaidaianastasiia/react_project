@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Switch, Route} from "react-router-dom";
-import './App.css';
+import './App.scss';
 import SignupPage from "./pages/signup-page/SignupPage";
 import SigninPage from "./pages/signin-page/SigninPage";
 import ProtectedRoute from "./components/routing/ProtectedRoute";

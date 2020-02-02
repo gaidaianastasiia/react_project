@@ -1,0 +1,35 @@
+body {
+  font-family: $primaryFont;
+  font-size: 16px;
+  color: $secondaryColor;
+  background-color: $backgroundBody;
+  line-height: 1.5;
+
+  @media (max-width: $tabletMin) {
+    font-size: 14px;
+  }
+}
+
+.title {
+  font-family: $titleFont;
+  text-transform: capitalize;
+  color: $primaryColor;
+  line-height: 1.2;
+}
+
+.title_page {
+  font-size: 50px;
+}
+
+.title_item {
+  font-size: 35px;
+}
+
+a {
+  transition: all .3s ease-in-out;
+  color: inherit;
+
+  &:hover {
+    color: $accentColor;
+  }
+}

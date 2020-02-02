@@ -93,7 +93,7 @@ export default class NewsModal extends Component {
         <form className={"newsModal__form"} onSubmit={this.handleSubmit} encType={"multipart/form-data"}>
           <div className="newsModal__close-btn">
             <Button theme={"light"} size={"auto"} onClick={handleCloseBtnClick}>
-              X
+              x
             </Button>
           </div>
 

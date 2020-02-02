@@ -1,0 +1,25 @@
+.auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  &__form {
+    width: 300px;
+    margin: 80px 0 15px;
+
+    @media (max-width: $tabletMin) {
+      margin: 120px 0 15px;
+    }
+
+    input {
+        width: 100%;
+      }
+  }
+
+  &__link {
+    margin-bottom: 60px;
+  }
+}
+

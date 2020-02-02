@@ -46,10 +46,10 @@
     -ms-animation: spinner 1500ms infinite linear;
     -o-animation: spinner 1500ms infinite linear;
     animation: spinner 1500ms infinite linear;
-    border-left: 4px solid rgba(0, 123, 255, 1);
-    border-right: 4px solid rgba(0, 123, 255, 1);
-    border-bottom: 4px solid rgba(0, 123, 255, 1);
-    border-top: 4px solid rgba(0, 123, 255, .5);
+    border-left: 4px solid $accentColor;
+    border-right: 4px solid $accentColor;
+    border-bottom: 4px solid $accentColor;
+    border-top: 4px solid $accentColorOpacity;
     border-radius: 100%;
 
 }

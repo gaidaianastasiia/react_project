@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import "./AuthSignin.css";
-import "../Auth.css";
 import Input from "../../common/input/Input";
 import Button from "../../common/button/Button";
 import Loader from "../../common/loader/Loader";
