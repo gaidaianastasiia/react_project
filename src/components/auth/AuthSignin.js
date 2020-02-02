@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import Input from "../../common/input/Input";
-import Button from "../../common/button/Button";
-import Loader from "../../common/loader/Loader";
+import Input from "../common/input/Input";
+import Button from "../common/button/Button";
+import Loader from "../common/loader/Loader";
 import {Link, Redirect} from "react-router-dom";
-import AuthService from "../../../services/AuthService";
-import ValidationService from "../../../services/ValidationService";
-import {INTERNAL_SERVER_ERROR, AUTH_SERVER_ERR_MESSAGES} from "../../../constants/apiErrMessages";
+import AuthService from "../../services/AuthService";
+import ValidationService from "../../services/ValidationService";
+import {INTERNAL_SERVER_ERROR, AUTH_SERVER_ERR_MESSAGES} from "../../constants/apiErrMessages";
 
 export default class AuthSignin extends Component {
     constructor() {
@@ -123,7 +123,7 @@ export default class AuthSignin extends Component {
         return (
             <section className="auth">
                 <form action="#" className="auth__form">
-                    <h2 className="auth__title">Sign in</h2>
+                    <h2 className="title title_item">Sign <span>In</span></h2>
                     <p className="auth__server-err-message">{serverErrMessage}</p>
                     <Input
                         type={"email"}
@@ -141,7 +141,7 @@ export default class AuthSignin extends Component {
                         labelText={"Password"}
                         errorMessage={passErrMessage}
                     />
-                    <Button onClick={this.handleSubmit}>Signin</Button>
+                    <Button onClick={this.handleSubmit}>Sign in</Button>
                 </form>
                 <div className="auth__link">
                     <Link to="/signup">No account? Create one here.</Link>

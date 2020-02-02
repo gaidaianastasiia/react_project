@@ -1,12 +1,12 @@
 import React from "react";
-import NewsListItem from "../news-list-item/NewsListItem";
+import NewsListItem from "./NewsListItem";
 
 const NewsList = ({ news }) => (
-  <div>
+  <ul className="news__list">
     {news.map(el => (
       <NewsListItem key={el.id} newsItem={el} />
     ))}
-  </div>
+  </ul>
 );
 
 export default NewsList;

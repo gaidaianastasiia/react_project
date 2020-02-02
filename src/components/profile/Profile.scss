@@ -1,0 +1,40 @@
+.profile {
+  &__details {
+    width: 225px;
+    margin: 0 auto;
+
+    @media (max-width: 575px) {
+      width: 180px;
+    }
+  }
+
+  &__gender {
+    margin-bottom: 10px;
+
+    p {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    &-controls {
+      display: flex;
+
+      .input {
+        margin-right: 10px;
+      }
+
+      label {
+        font-weight: 400;
+      }
+    }
+  }
+
+  &__change-pass {
+    margin-bottom: 10px;
+
+    button {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+  }
+}

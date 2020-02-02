@@ -1,0 +1,30 @@
+.textarea {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+
+    &__label {
+        font-weight: 700;
+    }
+
+    &__control {
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        padding: 5px;
+        font-weight: 400;
+        border: 1px solid #ced4da;
+        resize: none;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+
+    &__error {
+        margin-bottom: 10px;
+        color: red;
+    }
+
+    &__invalid {
+        border-color: red;
+    }
+}

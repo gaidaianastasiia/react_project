@@ -1,5 +1,6 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
-const Logo = () => <div className="logo">Logo</div>;
+const Logo = () => <Link to="/news" className="logo">Logo</Link>;
 
 export default Logo;

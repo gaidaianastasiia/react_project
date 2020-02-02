@@ -1,4 +1,5 @@
 body {
+  margin: 0;
   font-family: $primaryFont;
   font-size: 16px;
   color: $secondaryColor;
@@ -6,23 +7,37 @@ body {
   line-height: 1.5;
 
   @media (max-width: $tabletMin) {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 
 .title {
+  margin-bottom: 15px;
   font-family: $titleFont;
   text-transform: capitalize;
   color: $primaryColor;
   line-height: 1.2;
-}
+  text-align: center;
 
-.title_page {
-  font-size: 50px;
-}
+  span {
+    color: $accentColor;
+  }
 
-.title_item {
-  font-size: 35px;
+  &_page {
+    font-size: 45px;
+
+    @media (max-width: $tabletMin) {
+      font-size: 40px;
+    }
+  }
+
+  &_item {
+    font-size: 30px;
+
+    @media (max-width: $tabletMin) {
+      font-size: 25px;
+    }
+  }
 }
 
 a {

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import "./NewsModal.css";
-import Input from "../../common/input/Input";
-import Button from "../../common/button/Button";
-import Textarea from "../../common/textarea/Textarea";
-import ValidationService from "../../../services/ValidationService";
+import Input from "../common/input/Input";
+import Button from "../common/button/Button";
+import Textarea from "../common/textarea/Textarea";
+import ValidationService from "../../services/ValidationService";
 
 export default class NewsModal extends Component {
   constructor(props) {
@@ -89,12 +88,10 @@ export default class NewsModal extends Component {
     const { handleCloseBtnClick } = this.props;
 
     return (
-      <div className={"newsModal"}>
-        <form className={"newsModal__form"} onSubmit={this.handleSubmit} encType={"multipart/form-data"}>
-          <div className="newsModal__close-btn">
-            <Button theme={"light"} size={"auto"} onClick={handleCloseBtnClick}>
-              x
-            </Button>
+      <div className="modal">
+        <form className={"modal__form"} onSubmit={this.handleSubmit} encType={"multipart/form-data"}>
+          <div className="modal__close-btn">
+            <Button theme={"light"} size={"auto"} onClick={handleCloseBtnClick}>x</Button>
           </div>
 
           <img src={imgUrl} alt="" />

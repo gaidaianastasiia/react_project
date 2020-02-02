@@ -1,59 +1,66 @@
 .input {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-}
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 
-.input input:disabled {
+  input {
+    font-weight: 400;
+  }
+
+  input:disabled {
     background-color: #eee;
-}
+  }
 
-/*  стили для input type="text, email, password, number" */
-.input__control_default {
+  &__label {
+    font-weight: 700;
+  }
+
+  &__control_default {
     display: block;
     margin-top: 5px;
     padding: 5px;
     border: 1px solid #ced4da;
     background-color: #fff;
     border-radius: 5px;
-}
+  }
 
-.input__control_file {
+  &__control_file {
     display: block;
     margin-top: 5px;
-}
+  }
 
-.input__control_date {
-    display: block;
-    margin-top: 5px;
-    padding: 5px;
-    border: 1px solid #ced4da;
-    background-color: #fff;
-    border-radius: 5px;
-}
-
-.input__control_time {
+  &__control_date {
     display: block;
     margin-top: 5px;
     padding: 5px;
     border: 1px solid #ced4da;
     background-color: #fff;
     border-radius: 5px;
-}
+  }
 
-.input__control_radio {
-    /* стили для input type="radio" */
-}
-
-.input__control_checkbox {
+  &__control_time {
+    display: block;
     margin-top: 5px;
-}
+    padding: 5px;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    border-radius: 5px;
+  }
 
-.input__error {
+  &__control_checkbox {
+    margin: 5px 0 0 5px;
+  }
+
+  &__control_radio {
+    margin-left: 5px;
+  }
+
+  &__error {
     margin-bottom: 10px;
     color: red;
-}
+  }
 
-.input__invalid {
+  &__invalid {
     border-color: red;
+  }
 }

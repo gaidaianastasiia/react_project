@@ -1,7 +1,6 @@
 import React, {Component} from "react";
-import Input from "../../common/input/Input";
-import Button from "../../common/button/Button";
-import "./EventsModal.css";
+import Input from "../common/input/Input";
+import Button from "../common/button/Button";
 
 export default class EventsModal extends Component {
     constructor(props) {
@@ -60,12 +59,10 @@ export default class EventsModal extends Component {
         const {handleCloseBtnClick} = this.props;
 
         return (
-            <div className={"modal"}>
-                <form className="moda__form">
+            <div className="modal">
+                <form className="modal__form">
                     <div className="modal__close-btn">
-                        <Button theme={"light"} size={"auto"} onClick={handleCloseBtnClick}>
-                            X
-                        </Button>
+                        <Button theme={"light"} size={"auto"} onClick={handleCloseBtnClick}>x</Button>
                     </div>
 
                     <Input name={"name"} value={name} onChange={this.handleInputChange} labelText={"Name"}/>
