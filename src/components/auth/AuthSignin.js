@@ -6,6 +6,7 @@ import {Link, Redirect} from "react-router-dom";
 import AuthService from "../../services/AuthService";
 import ValidationService from "../../services/ValidationService";
 import {INTERNAL_SERVER_ERROR, AUTH_SERVER_ERR_MESSAGES} from "../../constants/apiErrMessages";
+import ServerErrMessage from "../common/server-err-message/ServerErrMessage";
 
 export default class AuthSignin extends Component {
     constructor() {
@@ -36,7 +37,9 @@ export default class AuthSignin extends Component {
         });
     }
 
-    handleSubmit = () => {
+    handleSubmit = e => {
+        e.preventDefault();
+
         this.clearErrMessages();
 
         const {email, password} = this.state.user;
@@ -90,13 +93,6 @@ export default class AuthSignin extends Component {
         });
     }
 
-    setServerResponseResult = () => {
-        this.setState({
-            ...this.state,
-            isServerResponseSuccessful: true
-        });
-    }
-
     showServerErrMessage = err => {
         switch (err) {
             case 500:
@@ -124,7 +120,9 @@ export default class AuthSignin extends Component {
             <section className="auth">
                 <form action="#" className="auth__form">
                     <h2 className="title title_item">Sign <span>In</span></h2>
-                    <p className="auth__server-err-message">{serverErrMessage}</p>
+
+                    <ServerErrMessage>{serverErrMessage}</ServerErrMessage>
+
                     <Input
                         type={"email"}
                         name={"email"}
@@ -141,8 +139,10 @@ export default class AuthSignin extends Component {
                         labelText={"Password"}
                         errorMessage={passErrMessage}
                     />
-                    <Button onClick={this.handleSubmit}>Sign in</Button>
+
+                    <Button type={"submit"} onClick={this.handleSubmit}>Sign in</Button>
                 </form>
+
                 <div className="auth__link">
                     <Link to="/signup">No account? Create one here.</Link>
                 </div>

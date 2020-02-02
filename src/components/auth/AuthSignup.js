@@ -6,6 +6,7 @@ import {Link, Redirect} from "react-router-dom";
 import AuthService from "../../services/AuthService";
 import ValidationService from "../../services/ValidationService";
 import {AUTH_SERVER_ERR_MESSAGES, INTERNAL_SERVER_ERROR} from "../../constants/apiErrMessages";
+import ServerErrMessage from "../common/server-err-message/ServerErrMessage";
 
 export default class AuthSignup extends Component {
     constructor() {
@@ -38,7 +39,9 @@ export default class AuthSignup extends Component {
         });
     }
 
-    handleSubmit = () => {
+    handleSubmit = e => {
+        e.preventDefault();
+
         this.clearErrMessages();
 
         const {email, password, confPassword} = this.state.user;
@@ -130,7 +133,9 @@ export default class AuthSignup extends Component {
             <section className="auth">
                 <form action="#" className="auth__form">
                     <h2 className="title title_item">Sign <span>Up</span></h2>
-                    <p className="auth__server-err-message">{serverErrMessage}</p>
+
+                    <ServerErrMessage>{serverErrMessage}</ServerErrMessage>
+
                     <Input
                         type={"email"}
                         name={"email"}
@@ -155,11 +160,14 @@ export default class AuthSignup extends Component {
                         labelText={"Enter your password again for verification"}
                         errorMessage={confPassErrMessage}
                     />
-                    <Button onClick={this.handleSubmit}>Sign up</Button>
+
+                    <Button type={"submit"} onClick={this.handleSubmit}>Sign up</Button>
                 </form>
+
                 <div className="auth__link">
                     <Link to="/signin">Already have an account? Sign In.</Link>
                 </div>
+
                 {showLoader && <Loader/>}
                 {isRedirect && <Redirect to={{pathname: '/news'}}/>}
             </section>
