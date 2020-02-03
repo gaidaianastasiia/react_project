@@ -65,7 +65,7 @@ export default class ValidationService {
     return textFieldData;
   }
 
-  validationDate(date) {
+    validateDate(date) {
     let dateFieldData = {
       isValid: true,
       errMessage: ""

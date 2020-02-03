@@ -72,6 +72,7 @@ const FakeAPI = (() => {
         },
         {
             name: "Event 4",
+            description: "awesome event № 4",
             date: "2020-01-28",
             start_time: "",
             end_time: "",
@@ -80,6 +81,7 @@ const FakeAPI = (() => {
         },
         {
             name: "Event 5",
+            description: "awesome event № 5",
             date: "2020-01-29",
             start_time: "15:00",
             end_time: "19:00",
@@ -88,6 +90,7 @@ const FakeAPI = (() => {
         },
         {
             name: "Event 6",
+            description: "awesome event № 6",
             date: "2020-01-30",
             start_time: "",
             end_time: "",

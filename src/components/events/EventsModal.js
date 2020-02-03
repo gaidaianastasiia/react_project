@@ -1,9 +1,8 @@
 import React, {Component} from "react";
-import Input from "../../common/input/Input";
-import Button from "../../common/button/Button";
-import Textarea from "../../common/textarea/Textarea";
-import "./EventsModal.css";
-import ValidationService from "../../../services/ValidationService";
+import Input from "../common/input/Input";
+import Button from "../common/button/Button";
+import Textarea from "../common/textarea/Textarea";
+import ValidationService from "../../services/ValidationService";
 
 export default class EventsModal extends Component {
     constructor(props) {
@@ -65,7 +64,7 @@ export default class EventsModal extends Component {
 
         const NameValidData = this.validationService.validateTextField(name);
         const DescriptionValidData = this.validationService.validateTextField(description);
-        const DateValidData = this.validationService.validationDate(date);
+        const DateValidData = this.validationService.validateDate(date);
         const TimeValidateData = this.validationService.validateTime(start_time, end_time, full_day);
 
         if (NameValidData.isValid && DescriptionValidData.isValid && DateValidData.isValid && TimeValidateData.isValid) {
