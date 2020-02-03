@@ -23,7 +23,7 @@ export default class EventsModal extends Component {
     NameError: "",
     DescriptionError: "",
     DateError: "",
-    TimeError: "",
+    TimeError: ""
   };
 
   componentDidMount = () => {
@@ -57,7 +57,7 @@ export default class EventsModal extends Component {
 
   handleCheckboxChange = ({ target: { checked } }) => {
     this.setState({
-      ...this.props,
+      ...this.state,
       start_time: "",
       end_time: "",
       disabled: checked,
@@ -75,15 +75,7 @@ export default class EventsModal extends Component {
       end_time,
       full_day
     } = this.state;
-    // this.props.handleSubmit({
-    //   name,
-    //   date,
-    //   description,
-    //   start_time,
-    //   end_time,
-    //   full_day,
 
-    // });
     const NameValidData = this.validationService.validateTextField(name);
     const DescriptionValidData = this.validationService.validateTextField(
       description
@@ -131,7 +123,7 @@ export default class EventsModal extends Component {
       NameError,
       DescriptionError,
       DateError,
-      TimeError,
+      TimeError
     } = this.state;
     const { handleCloseBtnClick } = this.props;
     return (

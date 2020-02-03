@@ -73,35 +73,44 @@ export default class ValidationService {
 
     const selectedDate = new Date(date).setHours(0, 0, 0, 0);
     const dateNow = new Date().setHours(0, 0, 0, 0);
+
     if (isNaN(selectedDate) || selectedDate < dateNow) {
       dateFieldData.isValid = false;
-      dateFieldData.errMessage = "DateTime cannot be less then now";
-    } else if (selectedDate === dateNow) {
-      dateFieldData.isValid = true;
-      dateFieldData.errMessage = "";
+      dateFieldData.errMessage = "Date cannot be less then now";
     }
+
+    if (this._isEmpty(date)) {
+      dateFieldData.isValid = false;
+      dateFieldData.errMessage = "This field is required.";
+    }
+
     return dateFieldData;
   }
 
   validateTime(startTime, endTime, fullDay) {
-    let timeValidData = {
-      isValid: true,
-      errMessage: ""
+    let timeFieldData = {
+      errMessage: "",
+      isValid: true
     };
-    if (fullDay) {
-      timeValidData.isValid = true;
-      timeValidData.errMessage = "";
-    } else if (this._isEmpty(startTime) || this._isEmpty(endTime)) {
-      timeValidData.isValid = false;
-      timeValidData.errMessage = "Select correct time or check the checkbox";
-    } else if (startTime > endTime) {
-      timeValidData.isValid = false;
-      timeValidData.errMessage =
+
+    if (this._isEmpty(startTime) || this._isEmpty(endTime)) {
+      timeFieldData.isValid = false;
+      timeFieldData.errMessage = "Select correct time or check the checkbox";
+    }
+
+    if (startTime > endTime) {
+      timeFieldData.isValid = false;
+      timeFieldData.errMessage =
         "End time of event cannot be earlier than start time";
     }
-    return timeValidData;
-  }
 
+    if (fullDay) {
+      timeFieldData.isValid = true;
+      timeFieldData.errMessage = "";
+    }
+
+    return timeFieldData;
+  }
   _isEmpty(value) {
     return !value.trim();
   }
