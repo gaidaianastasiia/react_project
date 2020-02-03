@@ -46,6 +46,7 @@ const FakeAPI = (() => {
         {
             name: "Event 1",
             date: "2020-01-26",
+            description: "awesome event № 1",
             start_time: "12:00",
             end_time: "18:00",
             full_day: false,
@@ -54,6 +55,7 @@ const FakeAPI = (() => {
         {
             name: "Event 2",
             date: "2020-01-26",
+            description: "awesome event № 2",
             start_time: "",
             end_time: "",
             full_day: true,
@@ -62,6 +64,7 @@ const FakeAPI = (() => {
         {
             name: "Event 3",
             date: "2020-01-27",
+            description: "awesome event № 3",
             start_time: "11:00",
             end_time: "16:00",
             full_day: false,
@@ -69,6 +72,7 @@ const FakeAPI = (() => {
         },
         {
             name: "Event 4",
+            description: "awesome event № 4",
             date: "2020-01-28",
             start_time: "",
             end_time: "",
@@ -77,6 +81,7 @@ const FakeAPI = (() => {
         },
         {
             name: "Event 5",
+            description: "awesome event № 5",
             date: "2020-01-29",
             start_time: "15:00",
             end_time: "19:00",
@@ -85,6 +90,7 @@ const FakeAPI = (() => {
         },
         {
             name: "Event 6",
+            description: "awesome event № 6",
             date: "2020-01-30",
             start_time: "",
             end_time: "",

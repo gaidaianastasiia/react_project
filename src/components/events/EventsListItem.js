@@ -19,7 +19,7 @@ const EventsListItem = ({event}) => (
 
                 <div className="events__content">
                     <h3 className="title title_item">{event.name}</h3>
-
+                    <p><span>Description: </span>{event.description}</p>
                     <p><span>Date: </span>{event.date}</p>
 
                     {event.full_day ?
