@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {Switch, Route} from "react-router-dom";
 import './App.scss';
-import SignupPage from "./pages/signup-page/SignupPage";
-import SigninPage from "./pages/signin-page/SigninPage";
+import SignupPage from "./pages/SignupPage";
+import SigninPage from "./pages/SigninPage";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
-import NewsPage from "./pages/news-page/NewsPage";
-import EventsPage from "./pages/events-page/EventsPage";
-import ProfilePage from "./pages/profile-page/ProfilePage";
+import NewsPage from "./pages/NewsPage";
+import EventsPage from "./pages/EventsPage";
+import ProfilePage from "./pages/ProfilePage";
 import AuthService from "./services/AuthService";
 import Loader from "./components/common/loader/Loader";
 
