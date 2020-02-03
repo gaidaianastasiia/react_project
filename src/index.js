@@ -7,11 +7,10 @@ import {BrowserRouter as Router} from "react-router-dom";
 import FakeAPI from "./fake-api/fakeAPI";
 
 const app = (
-    <Router>
-        <App/>
-    </Router>
+  <Router>
+    <App/>
+  </Router>
 );
-
 
 window.fakeApi = FakeAPI;
 

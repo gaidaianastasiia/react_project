@@ -4,15 +4,15 @@ import Footer from "../components/common/footer/Footer";
 import Auth from "../components/auth/Auth";
 
 export default class SigninPage extends Component {
-    render() {
-        return (
-            <Fragment>
-                <Header/>
-                <main>
-                    <Auth type={"signin"}/>
-                </main>
-                <Footer/>
-            </Fragment>
-        )
-    }
+  render() {
+    return (
+      <Fragment>
+        <Header/>
+        <main>
+          <Auth type={"signin"}/>
+        </main>
+        <Footer/>
+      </Fragment>
+    )
+  }
 }

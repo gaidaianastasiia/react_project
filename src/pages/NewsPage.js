@@ -3,11 +3,11 @@ import BaseTemplate from "../components/base-template/BaseTemplate";
 import News from "../components/news/News";
 
 export default class NewsPage extends Component {
-    render() {
-        return (
-            <BaseTemplate>
-                <News/>
-            </BaseTemplate>
-        )
-    }
+  render() {
+    return (
+      <BaseTemplate>
+        <News/>
+      </BaseTemplate>
+    )
+  }
 }

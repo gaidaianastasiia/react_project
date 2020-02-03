@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import "./Profile.scss";
 import ProfileService from "../../services/ProfileService";
-import ProfileModal from "./ProfileModal";
-import Loader from "../common/loader/Loader";
 import { INTERNAL_SERVER_ERROR, PROFILE_SERVER_ERR_MESSAGES } from "../../constants/apiErrMessages";
-import ProfileDetails from "./ProfileDetails";
 import ServerErrMessage from "../common/server-err-message/ServerErrMessage";
+import ProfileModal from "./ProfileModal";
+import ProfileDetails from "./ProfileDetails";
+import Loader from "../common/loader/Loader";
 
 export default class Profile extends Component {
   constructor() {

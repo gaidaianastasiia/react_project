@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
+import ValidationService from "../../services/ValidationService";
 import Input from "../common/input/Input";
 import Button from "../common/button/Button";
 import Textarea from "../common/textarea/Textarea";
-import ValidationService from "../../services/ValidationService";
 
 export default class NewsModal extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ export default class NewsModal extends Component {
 
   componentDidMount = () => {
     if (this.updatingNews) {
-      const { title, content, imgUrl, type } = this.updatingNews;
+      const {title, content, imgUrl, type} = this.updatingNews;
 
       this.setState({
         ...this.state,
@@ -41,7 +41,7 @@ export default class NewsModal extends Component {
     }
   };
 
-  handleInputChange = ({ target: { name, value } }) => {
+  handleInputChange = ({target: {name, value}}) => {
     this.setState({
       ...this.state,
       currentNews: {
@@ -64,12 +64,12 @@ export default class NewsModal extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { title, content, imgUrl, type } = this.state.currentNews;
+    const {title, content, imgUrl, type} = this.state.currentNews;
     const titleValidData = this.validationService.validateTextField(title);
     const contentValidData = this.validationService.validateTextField(content);
 
     if (titleValidData.isValid && contentValidData.isValid) {
-      this.props.handleSubmit({ title, content, imgUrl, type });
+      this.props.handleSubmit({title, content, imgUrl, type});
     } else {
       this.setState({
         ...this.state,
@@ -83,9 +83,9 @@ export default class NewsModal extends Component {
   };
 
   render() {
-    const { title, content, imgUrl } = this.state.currentNews;
-    const { titleErrMessage, contentErrMessage } = this.state;
-    const { handleCloseBtnClick } = this.props;
+    const {title, content, imgUrl} = this.state.currentNews;
+    const {titleErrMessage, contentErrMessage} = this.state;
+    const {handleCloseBtnClick} = this.props;
 
     return (
       <div className="modal">
@@ -94,10 +94,10 @@ export default class NewsModal extends Component {
             <Button theme={"light"} size={"auto"} onClick={handleCloseBtnClick}>x</Button>
           </div>
 
-          <img src={imgUrl} alt="" />
-          <Input type={"file"} name={"imgUrl"} onChange={this.handleImageInputChange} labelText={"Select image"} />
-          <Input type={"text"} value={title} name={"title"} onChange={this.handleInputChange} labelText={"News title"} errorMessage={titleErrMessage} />
-          <Textarea value={content} name={"content"} onChange={this.handleInputChange} labelText={"News Content"} errorMessage={contentErrMessage} />
+          <img src={imgUrl} alt=""/>
+          <Input type={"file"} name={"imgUrl"} onChange={this.handleImageInputChange} labelText={"Select image"}/>
+          <Input type={"text"} value={title} name={"title"} onChange={this.handleInputChange} labelText={"News title"} errorMessage={titleErrMessage}/>
+          <Textarea value={content} name={"content"} onChange={this.handleInputChange} labelText={"News Content"} errorMessage={contentErrMessage}/>
 
           <Button type={"submit"}>Save</Button>
         </form>
