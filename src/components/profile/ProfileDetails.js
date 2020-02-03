@@ -1,85 +1,85 @@
 import React, {Component} from "react";
+import AuthService from "../../services/AuthService";
 import Input from "../common/input/Input";
 import Button from "../common/button/Button";
-import AuthService from "../../services/AuthService";
 
 export default class ProfileDetails extends Component {
-    constructor() {
-        super();
-        this.authService = new AuthService();
-        this.currentUser = this.authService.getCurrentUser();
-    }
+  constructor() {
+    super();
+    this.authService = new AuthService();
+    this.currentUser = this.authService.getCurrentUser();
+  }
 
-    state = {
-        first_name: "",
-        last_name: "",
-        email: "",
-        age: "",
-        gender: ""
+  state = {
+    first_name: "",
+    last_name: "",
+    email: "",
+    age: "",
+    gender: ""
+  };
+
+  componentDidMount() {
+    const {first_name, last_name, email, age, gender} = this.currentUser;
+
+    this.setState({
+      ...this.state,
+      first_name,
+      last_name,
+      email,
+      age,
+      gender
+    });
+  }
+
+  handleInputChange = ({target: {name, value}}) => {
+    this.setState({
+      ...this.state,
+      [name]: value
+    });
+  };
+
+  handleSubmit = () => {
+    const {first_name, last_name, email, age, gender} = this.state;
+
+    const updatedData = {
+      first_name,
+      last_name,
+      email,
+      age,
+      gender,
+      role: this.currentUser.role
     };
 
-    componentDidMount() {
-        const {first_name, last_name, email, age, gender} = this.currentUser;
+    this.props.handleUpdateSubmit(updatedData);
+  };
 
-        this.setState({
-            ...this.state,
-            first_name,
-            last_name,
-            email,
-            age,
-            gender
-        });
-    }
+  render() {
+    const {first_name, last_name, email, age, gender} = this.state;
+    const {handleChangePassBtnClick} = this.props;
 
-    handleInputChange = ({target: {name, value}}) => {
-        this.setState({
-            ...this.state,
-            [name]: value
-        });
-    };
+    return (
+      <form className="profile__details">
+        <Input name={"first_name"} value={first_name} onChange={this.handleInputChange} labelText={"First Name"}/>
+        <Input name={"last_name"} value={last_name} onChange={this.handleInputChange} labelText={"Last Name"}/>
+        <Input type={"email"} name={"email"} value={email} onChange={this.handleInputChange} labelText={"Email"}/>
+        <Input type={"number"} name={"age"} value={age} onChange={this.handleInputChange} labelText={"Age"}/>
 
-    handleSubmit = () => {
-        const {first_name, last_name, email, age, gender} = this.state;
+        <div className="profile__gender">
+          <p>Gender</p>
+          <div className="profile__gender-controls">
+            <Input type={"radio"} name={"gender"} value={"male"} isChecked={gender === "male"} onChange={this.handleInputChange} labelText={"male:"}/>
+            <Input type={"radio"} name={"gender"} value={"female"} isChecked={gender === "female"} onChange={this.handleInputChange} labelText={"female:"}/>
+          </div>
+        </div>
 
-        const updatedData = {
-            first_name,
-            last_name,
-            email,
-            age,
-            gender,
-            role: this.currentUser.role
-        };
+        <p className="profile__change-pass">
+          <Button theme={"light"} onClick={handleChangePassBtnClick}>Change Password</Button>
+        </p>
 
-        this.props.handleUpdateSubmit(updatedData);
-    };
-
-    render() {
-        const {first_name, last_name, email, age, gender} = this.state;
-        const {handleChangePassBtnClick} = this.props;
-
-        return (
-            <form className="profile__details">
-                <Input name={"first_name"} value={first_name} onChange={this.handleInputChange} labelText={"First Name"}/>
-                <Input name={"last_name"} value={last_name} onChange={this.handleInputChange} labelText={"Last Name"}/>
-                <Input type={"email"} name={"email"} value={email} onChange={this.handleInputChange} labelText={"Email"}/>
-                <Input type={"number"} name={"age"} value={age} onChange={this.handleInputChange} labelText={"Age"}/>
-
-                <div className="profile__gender">
-                    <p>Gender</p>
-                    <div className="profile__gender-controls">
-                        <Input type={"radio"} name={"gender"} value={"male"} isChecked={gender === "male"} onChange={this.handleInputChange} labelText={"male:"}/>
-                        <Input type={"radio"} name={"gender"} value={"female"} isChecked={gender === "female"} onChange={this.handleInputChange} labelText={"female:"}/>
-                    </div>
-                </div>
-
-                <p className="profile__change-pass">
-                    <Button theme={"light"} onClick={handleChangePassBtnClick}>Change Password</Button>
-                </p>
-
-                <p>
-                    <Button size={"large"} onClick={this.handleSubmit}>Update</Button>
-                </p>
-            </form>
-        );
-    }
+        <p>
+          <Button size={"large"} onClick={this.handleSubmit}>Update</Button>
+        </p>
+      </form>
+    );
+  }
 }

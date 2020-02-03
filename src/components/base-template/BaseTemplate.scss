@@ -9,6 +9,7 @@
   text-align: center;
   background-color: $secondaryColor;
   box-sizing: border-box;
+
   @media (max-width: $tabletMin) {
     position: fixed;
     top: 60px;

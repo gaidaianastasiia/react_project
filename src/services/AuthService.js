@@ -4,16 +4,15 @@ import LocalTokenService from "./LocalTokenService";
 export default class AuthService {
   constructor() {
     this.tokenService = new LocalTokenService();
+    this.token =  this.tokenService.getToken();
   }
 
   getCurrentUser() {
-    const token = this.tokenService.getToken();
-    return jwt.decode(token);
+    return jwt.decode(this.token);
   }
 
   isAuthenticated() {
-    const token = this.tokenService.getToken();
-    return window.fakeApi.isAuthenticated(token);
+    return window.fakeApi.isAuthenticated(this.token);
   }
 
   signup(newUser) {

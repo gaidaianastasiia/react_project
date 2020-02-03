@@ -36,14 +36,20 @@
 
   p {
     margin-bottom: 15px;
-  }
 
-  span {
-    display: block;
-    font-weight: 700;
+    span {
+      display: block;
+      font-weight: 700;
+    }
   }
 
   &__full-day {
     font-weight: 700;
+  }
+
+  .modal__form {
+    position: absolute;
+    top: 100px;
+    transform: translate(-50%, 0);
   }
 }
