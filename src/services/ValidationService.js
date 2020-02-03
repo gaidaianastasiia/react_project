@@ -83,7 +83,7 @@ export default class ValidationService {
     return dateFieldData;
   }
 
-  validateTime(timeStart, timeEnd, fullDay) {
+  validateTime(startTime, endTime, fullDay) {
     let timeValidData = {
       isValid: true,
       errMessage: ""
@@ -91,15 +91,14 @@ export default class ValidationService {
     if (fullDay) {
       timeValidData.isValid = true;
       timeValidData.errMessage = "";
-    } else if (this._isEmpty(timeStart) || this._isEmpty(timeEnd)) {
+    } else if (this._isEmpty(startTime) || this._isEmpty(endTime)) {
       timeValidData.isValid = false;
       timeValidData.errMessage = "Select correct time or check the checkbox";
-    } else if (timeStart > timeEnd) {
+    } else if (startTime > endTime) {
       timeValidData.isValid = false;
       timeValidData.errMessage =
         "End time of event cannot be earlier than start time";
     }
-
     return timeValidData;
   }
 

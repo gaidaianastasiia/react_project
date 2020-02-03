@@ -24,7 +24,6 @@ export default class EventsModal extends Component {
     DescriptionError: "",
     DateError: "",
     TimeError: "",
-    CheckboxError: ""
   };
 
   componentDidMount = () => {
@@ -99,7 +98,7 @@ export default class EventsModal extends Component {
       NameValidData.isValid &&
       DescriptionValidData.isValid &&
       DateValidData.isValid &&
-      TimeValidateData
+      TimeValidateData.isValid
     ) {
       this.props.handleSubmit({
         name,
@@ -133,7 +132,6 @@ export default class EventsModal extends Component {
       DescriptionError,
       DateError,
       TimeError,
-      CheckboxError
     } = this.state;
     const { handleCloseBtnClick } = this.props;
     return (
@@ -191,7 +189,6 @@ export default class EventsModal extends Component {
             isChecked={full_day}
             onChange={this.handleCheckboxChange}
             labelText={"Full Day Event"}
-            errorMessage={CheckboxError}
           />
 
           <Button type={"submit"} onClick={this.handleSubmit}>
