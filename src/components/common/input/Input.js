@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./Input.css";
 
 const Input = ({ type, name, value, disabled, onChange, isChecked, labelText, errorMessage }) => {
     const controlClassName = {

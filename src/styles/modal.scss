@@ -1,0 +1,50 @@
+.modal {
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+  }
+
+  &__form {
+    z-index: 6;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    padding: 15px;
+    background-color: $backgroundBody;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+
+    @media (max-width: $tabletMin) {
+      width: 280px;
+    }
+  }
+
+  img {
+    max-width: 200px;
+    max-height: 150px;
+    margin-bottom: 15px;
+    object-fit: cover;
+    object-position: center;
+
+    @media (max-width: $tabletMin) {
+      max-width: 150px;
+      max-height: 120px;
+    }
+  }
+
+  &__close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+}

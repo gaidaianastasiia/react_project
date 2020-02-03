@@ -2,7 +2,6 @@ import React, {Component, Fragment} from 'react';
 import Header from "../common/header/Header";
 import Nav from "../common/nav/Nav";
 import PropTypes from 'prop-types';
-import "./BaseTemplate.css";
 import Footer from "../common/footer/Footer";
 
 export default class BaseTemplate extends Component {
@@ -20,7 +19,7 @@ export default class BaseTemplate extends Component {
         return (
             <Fragment>
                 <Header/>
-                <aside>
+                <aside className="aside">
                     <Nav/>
                 </aside>
                 <main className="main">

@@ -4,10 +4,10 @@ import AuthService from "../../services/AuthService";
 import { USER_ROLES } from "../../constants/userRoles";
 import ServerErrMessage from "../common/server-err-message/ServerErrMessage";
 import { INTERNAL_SERVER_ERROR } from "../../constants/apiErrMessages";
-import NewsList from "./news-list/NewsList";
+import NewsList from "./NewsList";
 import Button from "../common/button/Button";
 import Loader from "../common/loader/Loader";
-import NewsModal from "./news-modal/NewsModal";
+import NewsModal from "./NewsModal";
 
 export const NewsContext = React.createContext();
 
@@ -155,7 +155,7 @@ export default class News extends Component {
 
     return (
       <section className="news">
-        <h2>News</h2>
+        <h2 className="title title_page">News</h2>
 
         <ServerErrMessage>{serverErrMessage}</ServerErrMessage>
 

@@ -1,0 +1,28 @@
+.nav {
+  height: 100%;
+
+  &__list {
+    position: relative;
+    height: 100%;
+    @media (max-width: $tabletMin) {
+        display: flex;
+        justify-content: space-around;
+    }
+  }
+
+  &__link {
+    color: $white;
+
+    &_bottom {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      @media (max-width: $tabletMin) {
+          position: static;
+          transform: translateX(0);
+      }
+    }
+  }
+}

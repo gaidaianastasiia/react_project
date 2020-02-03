@@ -23,15 +23,8 @@ const EventsListItem = ({ event }) => (
 
           {isAdmin && (
             <div>
-              <Button size={"small"} onClick={() => handleEditBtnClick(event)}>
-                Edit
-              </Button>
-              <Button
-                size={"small"}
-                onClick={() => handleDeleteBtnClick(event.id)}
-              >
-                Delete
-              </Button>
+              <Button size={"small"} onClick={() => handleEditBtnClick(event)}>Edit</Button>
+              <Button size={"small"} onClick={() => handleDeleteBtnClick(event.id)}>Delete</Button>
             </div>
           )}
         </div>

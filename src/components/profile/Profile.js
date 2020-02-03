@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import "./Profile.css";
+import "./Profile.scss";
 import ProfileService from "../../services/ProfileService";
-import ProfileModal from "./profile-modal/ProfileModal";
+import ProfileModal from "./ProfileModal";
 import Loader from "../common/loader/Loader";
 import { INTERNAL_SERVER_ERROR, PROFILE_SERVER_ERR_MESSAGES } from "../../constants/apiErrMessages";
-import ProfileDetails from "./profile-details/ProfileDetails";
+import ProfileDetails from "./ProfileDetails";
 import ServerErrMessage from "../common/server-err-message/ServerErrMessage";
 
 export default class Profile extends Component {
@@ -97,7 +97,7 @@ export default class Profile extends Component {
 
     return (
       <section className="profile">
-        <h2>Profile</h2>
+        <h2 className="title title_page">Pro<span>file</span></h2>
         <ServerErrMessage>{serverErrMessage}</ServerErrMessage>
         <ProfileDetails handleUpdateSubmit={this.handleUpdateSubmit} handleChangePassBtnClick={this.handleChangePassBtnClick} />
         {showModal && <ProfileModal handleCloseBtnClick={this.handleCloseBtnClick} handleChangePassSubmit={this.handleChangePassSubmit} />}

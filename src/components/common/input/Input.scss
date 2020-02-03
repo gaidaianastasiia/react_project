@@ -1,0 +1,66 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+
+  &__label {
+    font-weight: 700;
+  }
+
+  input {
+    font-weight: 400;
+  }
+
+  input:disabled {
+    background-color: #eee;
+  }
+
+  &__control_default {
+    display: block;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid $controlsBorderColor;
+    background-color: $white;
+    border-radius: 5px;
+  }
+
+  &__control_file {
+    display: block;
+    margin-top: 5px;
+  }
+
+  &__control_date {
+    display: block;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid $controlsBorderColor;
+    background-color: $white;
+    border-radius: 5px;
+  }
+
+  &__control_time {
+    display: block;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid $controlsBorderColor;
+    background-color: $white;
+    border-radius: 5px;
+  }
+
+  &__control_checkbox {
+    margin: 5px 0 0 5px;
+  }
+
+  &__control_radio {
+    margin-left: 5px;
+  }
+
+  &__error {
+    margin-bottom: 10px;
+    color: red;
+  }
+
+  &__invalid {
+    border-color: red;
+  }
+}
