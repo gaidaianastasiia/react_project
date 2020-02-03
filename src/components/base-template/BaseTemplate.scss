@@ -1,0 +1,36 @@
+.aside {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  padding: 70px 15px 40px;
+  text-align: center;
+  background-color: $secondaryColor;
+  box-sizing: border-box;
+
+  @media (max-width: $tabletMin) {
+    position: fixed;
+    top: 60px;
+    bottom: auto;
+    right: 0;
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+.main {
+  height: calc(100vh - 100px);
+}
+
+.main section {
+  position: relative;
+  margin-left: 100px;
+  padding: 75px 15px 55px;
+
+  @media (max-width: $tabletMin) {
+      margin-left: 0;
+      padding: 116px 15px 63px;
+  }
+}
