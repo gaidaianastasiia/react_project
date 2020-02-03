@@ -111,6 +111,7 @@ export default class ValidationService {
 
     return timeFieldData;
   }
+
   _isEmpty(value) {
     return !value.trim();
   }
